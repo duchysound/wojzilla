@@ -35,7 +35,7 @@ app.post('/webhook/', function (req, res) {
             if (text === 'Generic') {
                 sendGenericMessage(sender)
                 continue
-            } else if( text.toLowerCase().includes("suche") {
+            } else if( text.toLowerCase().includes("suche")) {
 				sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text) )
 				continue
 			}
