@@ -1,0 +1,24 @@
+{
+  "name": "wojzilla",
+  "version": "1.0.0",
+  "description": "Fancy Test Chat Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duchysound/wojzilla.git"
+  },
+  "author": "Erik Weisser",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duchysound/wojzilla/issues"
+  },
+  "homepage": "https://github.com/duchysound/wojzilla#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "request": "^2.81.0"
+  }
+}
