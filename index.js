@@ -3,6 +3,8 @@ var bodyParser = require('body-parser')
 var request = require('request')
 var app = express()
 var token = "EAAC6ygZBGWZBUBAH1Msr2r49NdZBjYCOlxay8hWgKcUo5ZAsZAOB5FZCxlA3r912Cr17ZB7ZAlAYy32oLoPUs79OaXBq9xDO6TGF5zmZBQoPieY5jMA7d1ONEx71sB8J3dOrf1j3ebjROOMfq6YocCthNiuZBJe2NOCPrYy2ACSoP7SQZDZD"
+var parsedWords = require('./words.json');
+
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -36,7 +38,7 @@ app.post('/webhook/', function (req, res) {
                 sendGenericMessage(sender)
                 continue
             } else if( text.toLowerCase().includes("suche")) {
-				sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text) )
+				sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text) + parsedWords.noun.length )
 				continue
 			}
 			
