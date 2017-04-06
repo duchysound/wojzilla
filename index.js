@@ -35,7 +35,11 @@ app.post('/webhook/', function (req, res) {
             if (text === 'Generic') {
                 sendGenericMessage(sender)
                 continue
-            }
+            } else if( text.toLowerCase().includes("suche") {
+				sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text) )
+				continue
+			}
+			
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
         if (event.postback) {
@@ -69,6 +73,7 @@ function sendTextMessage(sender, text) {
     })
 }
 
+// function to echo back messages
 function sendGenericMessage(sender) {
     messageData = {
         "attachment": {
