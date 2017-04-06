@@ -38,13 +38,6 @@ app.post('/webhook/', function (req, res) {
                 sendGenericMessage(sender)
                 continue
             } else if(text.toLowerCase().includes("suche")) {
-				for(var i = 0; i < parsedWords.nouns.length; i++) {
-					if(text.toLowerCase().include(noun)) {
-						sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(parsedWords.nouns[i]) )
-						continue
-					}
-				}
-				
 				sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text) + " " + parsedWords.nouns.length)
 				continue
 			}
