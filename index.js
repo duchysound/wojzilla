@@ -13,6 +13,10 @@ var FileAPI = require('file-api');
 var File = FileAPI.File;
 var path = require('path');
 
+var pub = __dirname + '/public';
+app.use(express.static(pub));
+app.use("/csv", express.static(__dirname + '/csv'));
+
 app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
@@ -22,7 +26,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 //reads command file on app startup
-fileReader.readAsText (new File("commands.csv"),"UTF-8");
+fileReader.readAsText (new File("./csv/commands.csv"),"UTF-8");
 
 // Index route
 app.get('/', function (req, res) {
