@@ -32,10 +32,10 @@ fileReader.readAsText (new File(__dirname + '/csv/commands.csv'),"UTF-8");
 app.get('/', function (req, res) {
 
     //console.log(message.sendJson(0, "./highlights.json"));
-    res.send('Hello world, I am a chat bot');
+    res.send('Hello world, I am a chat bot ' + fileReader.result );
     var text = "zeig mir die highlights";
 
-   console.log(path.dirname(require.main.filename));
+    
 })
 
 // for Facebook verification
