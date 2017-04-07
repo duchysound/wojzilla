@@ -1,13 +1,12 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var request = require('request');
-var app = express();
-var token = "EAAC6ygZBGWZBUBAH1Msr2r49NdZBjYCOlxay8hWgKcUo5ZAsZAOB5FZCxlA3r912Cr17ZB7ZAlAYy32oLoPUs79OaXBq9xDO6TGF5zmZBQoPieY5jMA7d1ONEx71sB8J3dOrf1j3ebjROOMfq6YocCthNiuZBJe2NOCPrYy2ACSoP7SQZDZD";
-
+// required imports
+var config = require("./config.js");
 var message = require("./message.js");
 var parsedWords = require('./words.json');
 
 
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -83,6 +82,9 @@ function convertTextToSearchQuery(text) {
                 continue;
             }
         }
+    }
+    if(query < 1) {
+        query = text;
     }
     return query;
 }
