@@ -7,6 +7,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
+var FileReader = require('filereader');
+var fileReader = new FileReader();
+var FileAPI = require('file-api');
+var File = FileAPI.File;
+
 app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
@@ -15,10 +20,13 @@ app.use(bodyParser.urlencoded({extended: false}))
 // Process application/json
 app.use(bodyParser.json())
 
+//reads command file on app startup
+fileReader.readAsText (new File("./csv/commands.csv"),"UTF-8");
+
 // Index route
 app.get('/', function (req, res) {
 
-    console.log(message.sendJson(0, "./highlights.json"));
+    //console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot');
 })
 
@@ -37,15 +45,15 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id;
         if (event.message && event.message.text) {
             text = event.message.text.toLowerCase();
-            if(text.includes("suche")) {
+            if(includesSearchIdentifier(text)) {
 				text = convertTextToSearchQuery(text);
                 message.sendText(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
 				continue;
-            } else if(text.includes("highlights")) {
-                message.sendJson(sender, "./highlights.json");
-                continue;
 			} else if(text === 'generic') {
                 message.sendGeneric(sender);
+                continue;
+            } else if(includesCommand(text)) {
+                message.sendJson(sender, getCommandFile(text));
                 continue;
             }
             message.sendText(sender, "Text received, echo: " + text.substring(0, 200));
@@ -91,6 +99,17 @@ function convertTextToSearchQuery(text) {
     return query;
 }
 
+function includesCommand(text) {
+    var commandJson = csvToJSON(fileReader.result);
+
+    for (var i = 0; i < commandJson.command.length; i++) {
+        if(text.includes(commandJson.command.length[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function includesSearchIdentifier(text) {
     for (var j = 0; j < parsedWords.searchIdentifier.length; j++) {
         if(text.includes(parsedWords.searchIdentifier[j])) {
@@ -99,6 +118,37 @@ function includesSearchIdentifier(text) {
     }
     return false;
 }
+
+function getCommandFile(text) {
+    var commandJson = csvToJSON(fileReader.result);
+
+    for (var i = 0; i < commandJson.command.length; i++) {
+        if(text.includes(commandJson.command.length[i])) {
+            return commandJson.fileName[i];
+        }
+    }
+    return false;
+}
+
+function csvToJSON(csv) {
+    var lines=csv.split("\r\n");
+    var result = [];
+    var headers=lines[0].split(",");
+
+    for(var i=1;i<lines.length;i++){
+        var obj = {};
+        var currentline=lines[i].split(",");
+
+        for(var j=0;j<headers.length;j++){
+          obj[headers[j]] = currentline[j];
+        }
+
+        result.push(obj);
+    }
+    //return result; //JavaScript object
+    return JSON.stringify(result); //JSON
+}
+
 // Spin up the server
 app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'));
