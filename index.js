@@ -17,10 +17,7 @@ app.use(bodyParser.json())
 // Index route
 app.get('/', function (req, res) {
     res.send('Hello world, I am a chat bot');
-
-    for (var i = 0; i < parsedWords.nouns.length; i++) {
-      console.log(parsedWords.nouns[i]);
-    }
+    console.log(convertTextToSearchQuery("Suche nach einen großen schwarzen pullover"));
 })
 
 // for Facebook verification
@@ -63,20 +60,29 @@ function convertTextToSearchQuery(text) {
     var wordArray = text.split(" ");
 
     for (var i = 0; i < wordArray.length; i++) {
-        for (var i = 0; i < parsedWords.adjectives.length; i++) {
-            if(wordArray[i].includes(parsedWords.adjectives[i])) {
+        for (var j = 0; j < parsedWords.adjectives.length; j++) {
+            if(wordArray[i].includes(parsedWords.adjectives[j])) {
                 adjectives = adjectives + " " + wordArray[i];
                 continue;
             }
         }
-        for (var i = 0; i < parsedWords.nouns.length; i++) {
-            if(wordArray[i].includes(parsedWords.nouns[i])) {
+        for (var k = 0; k< parsedWords.nouns.length; k++) {
+            if(wordArray[i].includes(parsedWords.nouns[k])) {
                 nouns = nouns + " " + wordArray[i];
                 continue;
             }
         }
     }
-    return adjectives + " " + nouns;
+    return adjectives + nouns;
+}
+
+function includesSearchIdentifier(text) {
+        for (var j = 0; j < parsedWords.searchIdentifier.length; j++) {
+            if(text.includes(parsedWords.searchIdentifier[j])) {
+                return true;
+            }
+        }
+    return false;
 }
 
 // function to echo back messages
@@ -84,21 +90,12 @@ function sendTextMessage(sender, text) {
     messageData = {
         text:text
     }
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
+    sendObj(sender, messageData);
+}
+
+//function to send button
+function sendButton(type, url, title, sender) {
+
 }
 
 // function to echo back messages
@@ -134,6 +131,10 @@ function sendGenericMessage(sender) {
             }
         }
     }
+    sendObj(sender, messageData);
+}
+
+function sendObj(sender, messageData) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
