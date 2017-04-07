@@ -28,6 +28,9 @@ app.get('/', function (req, res) {
 
     //console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot');
+    var text = "highlights";
+    console.log(includesCommand(text));
+    console.log(getCommandFile(text));
 })
 
 // for Facebook verification
@@ -101,9 +104,8 @@ function convertTextToSearchQuery(text) {
 
 function includesCommand(text) {
     var commandJson = csvToJSON(fileReader.result);
-
-    for (var i = 0; i < commandJson.command.length; i++) {
-        if(text.includes(commandJson.command.length[i])) {
+    for (var i = 0; i < commandJson.length; i++) {
+        if(text.includes(commandJson[i].command)) {
             return true;
         }
     }
@@ -122,9 +124,10 @@ function includesSearchIdentifier(text) {
 function getCommandFile(text) {
     var commandJson = csvToJSON(fileReader.result);
 
-    for (var i = 0; i < commandJson.command.length; i++) {
-        if(text.includes(commandJson.command.length[i])) {
-            return commandJson.fileName[i];
+    for (var i = 0; i < commandJson.length; i++) {
+        console.log(commandJson[i].command);
+        if(text.includes(commandJson[i].command)) {
+            return commandJson[i].fileName;
         }
     }
     return false;
@@ -145,8 +148,8 @@ function csvToJSON(csv) {
 
         result.push(obj);
     }
-    //return result; //JavaScript object
-    return JSON.stringify(result); //JSON
+    return result; //JavaScript object
+    //return JSON.stringify(result); //JSON
 }
 
 // Spin up the server
