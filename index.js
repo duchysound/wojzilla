@@ -1,5 +1,5 @@
 // required imports
-var config = require("./config.js");
+var config = require("./config.json");
 var message = require("./message.js");
 var parsedWords = require('./words.json');
 
