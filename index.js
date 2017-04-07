@@ -53,6 +53,7 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id;
         if (event.message && event.message.text) {
             text = event.message.text.toLowerCase();
+            var commandJson = csvToJSON(fileReader.result);
             if(includesSearchIdentifier(text)) {
 				text = convertTextToSearchQuery(text);
                 message.sendText(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
@@ -60,11 +61,11 @@ app.post('/webhook/', function (req, res) {
 			} else if(text === 'generic') {
                 message.sendGeneric(sender);
                 continue;
-            } else if(includesCommand(text)) {
-                message.sendJson(sender, getCommandFile(text));
+            } else if(includesCommand(text, commandJson)) {
+                message.sendJson(sender, getCommandFile(text, commandJson));
                 continue;
             }
-            message.sendText(sender, "includesCommand: " + fileReader.result);
+            message.sendText(sender, "includesCommand: " + JSON.stringify(commandJson));
             message.sendText(sender, "Text received, echo: " + text.substring(0, 200));
         }
         if (event.postback) {
@@ -108,8 +109,7 @@ function convertTextToSearchQuery(text) {
     return query;
 }
 
-function includesCommand(text) {
-    var commandJson = csvToJSON(fileReader.result);
+function includesCommand(text, commandJson) {
     for (var i = 0; i < commandJson.length; i++) {
         if(text.includes(commandJson[i].command)) {
             return true;
@@ -127,8 +127,7 @@ function includesSearchIdentifier(text) {
     return false;
 }
 
-function getCommandFile(text) {
-    var commandJson = csvToJSON(fileReader.result);
+function getCommandFile(text, commandJson) {
     for (var i = 0; i < commandJson.length; i++) {
         if(text.includes(commandJson[i].command)) {
             return commandJson[i].fileName;
