@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 //reads command file on app startup
-fileReader.readAsText (new File("./app/commands.csv"),"UTF-8");
+fileReader.readAsText (new File("/app/commands.csv"),"UTF-8");
 
 // Index route
 app.get('/', function (req, res) {
