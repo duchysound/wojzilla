@@ -19,8 +19,8 @@ app.use(bodyParser.json())
 
 // Index route
 app.get('/', function (req, res) {
+    console.log(message.sendText(0, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI("123")));
     res.send('Hello world, I am a chat bot');
-    console.log(convertTextToSearchQuery("Suche nach einen großen schwarzen pullover"));
 })
 
 // for Facebook verification
