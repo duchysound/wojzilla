@@ -59,24 +59,17 @@ app.post('/webhook/', function (req, res) {
            
             //just for debug
             var lines=fileReader.result.split("\n");
-             message.sendText(sender, "1");
-            var result = [];
-             message.sendText(sender, "2");
+            var commandJson = [];
             var headers=lines[0].split(",");
- message.sendText(sender, "3");
-            for(var i=1;i<lines.length;i++){
+            for(var k=1;k<lines.length;k++){
                 var obj = {};
-                 message.sendText(sender, "4");
-                var currentline=lines[i].split(",");
-
+                var currentline=lines[k].split(",");
                 for(var j=0;j<headers.length;j++){
                   obj[headers[j]] = currentline[j];
                 }
- message.sendText(sender, "5");
-                result.push(obj);
+                commandJson.push(obj);
             }
- message.sendText(sender, "6");
-  message.sendText(sender, JSON.stringify(result));
+            message.sendText(sender, JSON.stringify(commandJson));
 
 
 
