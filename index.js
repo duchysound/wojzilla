@@ -64,7 +64,7 @@ app.post('/webhook/', function (req, res) {
                 message.sendJson(sender, getCommandFile(text));
                 continue;
             }
-            message.sendText(sender, "includesCommand: " + includesCommand(text));
+            message.sendText(sender, "includesCommand: " + fileReader.result);
             message.sendText(sender, "Text received, echo: " + text.substring(0, 200));
         }
         if (event.postback) {
