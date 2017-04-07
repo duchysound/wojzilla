@@ -41,7 +41,7 @@ app.post('/webhook/', function (req, res) {
             } else if(text.toLowerCase().includes("suche")) {
 				text = convertTextToSearchQuery(text);
                 sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
-                sendButton(sender, "web_type", "www.google.de", "Wie wärs mit Google?");
+                sendButton(sender, "web_type", "http://www.google.de", "Wie wärs mit Google?");
 				continue;
 			}
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200));
