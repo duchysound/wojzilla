@@ -11,6 +11,7 @@ var FileReader = require('filereader');
 var fileReader = new FileReader();
 var FileAPI = require('file-api');
 var File = FileAPI.File;
+var path = require('path');
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -21,7 +22,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 //reads command file on app startup
-fileReader.readAsText (new File("./commands.csv"),"UTF-8");
+fileReader.readAsText (new File("commands.csv"),"UTF-8");
 
 // Index route
 app.get('/', function (req, res) {
@@ -29,9 +30,8 @@ app.get('/', function (req, res) {
     //console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot');
     var text = "zeig mir die highlights";
-    console.log("Test includesCommand: " + includesCommand(text));
-    console.log("Test getCommandFile: " + getCommandFile(text));
-    message.sendJson(0, getCommandFile(text));
+
+   console.log(path.dirname(require.main.filename));
 })
 
 // for Facebook verification
@@ -62,7 +62,7 @@ app.post('/webhook/', function (req, res) {
              //   message.sendJson(sender, getCommandFile(text));
                // continue;
             //}
-            message.sendText(sender, "includesCommand: " + __dirname);
+            message.sendText(sender, "includesCommand: " + path.dirname(require.main.filename));
             message.sendText(sender, "Text received, echo: " + text.substring(0, 200));
         }
         if (event.postback) {
