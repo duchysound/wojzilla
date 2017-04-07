@@ -56,25 +56,7 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id;
         if (event.message && event.message.text) {
             text = event.message.text.toLowerCase();
-           
-            //just for debug
-            var lines=fileReader.result.split("\n");
-            var commandJson = [];
-            var headers=lines[0].split(",");
-            for(var k=1;k<lines.length;k++){
-                var obj = {};
-                var currentline=lines[k].split(",");
-                for(var j=0;j<headers.length;j++){
-                  obj[headers[j]] = currentline[j];
-                }
-                commandJson.push(obj);
-            }
-            message.sendText(sender, JSON.stringify(commandJson));
-            message.sendText(sender, JSON.stringify(csvToJSON(fileReader.result)));
-
-
-
-
+            var commandJson = csvToJSON(fileReader.result);
             if(includesSearchIdentifier(text)) {
 				text = convertTextToSearchQuery(text);
                 message.sendText(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
