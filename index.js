@@ -81,7 +81,7 @@ function convertTextToSearchQuery(text) {
             }
         }
     }
-    return adjectives + nouns;
+    return adjectives + " " +nouns;
 }
 
 function includesSearchIdentifier(text) {
