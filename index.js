@@ -31,6 +31,7 @@ app.get('/', function (req, res) {
     var text = "zeig mir die highlights";
     console.log("Test includesCommand: " + includesCommand(text));
     console.log("Test getCommandFile: " + getCommandFile(text));
+    message.sendJson(0, getCommandFile(text));
 })
 
 // for Facebook verification

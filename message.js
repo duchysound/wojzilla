@@ -62,7 +62,7 @@ module.exports = {
     },
 
     sendJson: function(sender, jsonName) {
-        var json = require(jsonName);
+        var json = require("./" + jsonName);
         sendObj(sender, json);
     }
 }
