@@ -34,6 +34,9 @@ app.get('/', function (req, res) {
     //console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot ' + fileReader.result );
     var text = "zeig mir die highlights";
+    var commandJson = csvToJSON(fileReader.result);
+    JSON.stringify(commandJson)
+    console.log(JSON.stringify(commandJson));
 
     
 })
@@ -53,7 +56,31 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id;
         if (event.message && event.message.text) {
             text = event.message.text.toLowerCase();
-            var commandJson = csvToJSON(fileReader.result);
+           
+            //just for debug
+            var lines=fileReader.result.split("\n");
+             message.sendText(sender, "1");
+            var result = [];
+             message.sendText(sender, "2");
+            var headers=lines[0].split(",");
+ message.sendText(sender, "3");
+            for(var i=1;i<lines.length;i++){
+                var obj = {};
+                 message.sendText(sender, "4");
+                var currentline=lines[i].split(",");
+
+                for(var j=0;j<headers.length;j++){
+                  obj[headers[j]] = currentline[j];
+                }
+ message.sendText(sender, "5");
+                result.push(obj);
+            }
+ message.sendText(sender, "6");
+  message.sendText(sender, JSON.stringify(result));
+
+
+
+
             if(includesSearchIdentifier(text)) {
 				text = convertTextToSearchQuery(text);
                 message.sendText(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
