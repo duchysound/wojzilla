@@ -42,7 +42,6 @@ app.post('/webhook/', function (req, res) {
 				continue;
             } else if(text.includes("highlights")) {
                 message.sendJson(sender, "./highlights.json");
-            }
 			} else if(text === 'generic') {
                 message.sendGeneric(sender);
             }
