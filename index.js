@@ -1,8 +1,8 @@
-var express = require('express')
-var bodyParser = require('body-parser')
-var request = require('request')
-var app = express()
-var token = "EAAC6ygZBGWZBUBAH1Msr2r49NdZBjYCOlxay8hWgKcUo5ZAsZAOB5FZCxlA3r912Cr17ZB7ZAlAYy32oLoPUs79OaXBq9xDO6TGF5zmZBQoPieY5jMA7d1ONEx71sB8J3dOrf1j3ebjROOMfq6YocCthNiuZBJe2NOCPrYy2ACSoP7SQZDZD"
+var express = require('express');
+var bodyParser = require('body-parser');
+var request = require('request');
+var app = express();
+var token = "EAAC6ygZBGWZBUBAH1Msr2r49NdZBjYCOlxay8hWgKcUo5ZAsZAOB5FZCxlA3r912Cr17ZB7ZAlAYy32oLoPUs79OaXBq9xDO6TGF5zmZBQoPieY5jMA7d1ONEx71sB8J3dOrf1j3ebjROOMfq6YocCthNiuZBJe2NOCPrYy2ACSoP7SQZDZD";
 var parsedWords = require('./words.json');
 
 
@@ -16,49 +16,56 @@ app.use(bodyParser.json())
 
 // Index route
 app.get('/', function (req, res) {
-    res.send('Hello world, I am a chat bot')
+    res.send('Hello world, I am a chat bot');
 
     for (var i = 0; i < parsedWords.nouns.length; i++) {
-      alert(parsedWords.nouns[i])
+      console.log(parsedWords.nouns[i]);
     }
 })
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
     if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
-        res.send(req.query['hub.challenge'])
+        res.send(req.query['hub.challenge']);
     }
-    res.send('Error, wrong token')
+    res.send('Error, wrong token');
 })
 
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
-        event = req.body.entry[0].messaging[i]
-        sender = event.sender.id
+        event = req.body.entry[0].messaging[i];
+        sender = event.sender.id;
         if (event.message && event.message.text) {
-            text = event.message.text
+            text = event.message.text;
             if (text === 'Generic') {
-                sendGenericMessage(sender)
-                continue
+                sendGenericMessage(sender);
+                continue;
             } else if(text.toLowerCase().includes("suche")) {
-				sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text) + " " + parsedWords.nouns.length)
+				var searchWord = text;
                 for (var i = 0; i < parsedWords.nouns.length; i++) {
-                  sendTextMessage(sender, parsedWords.nouns[i])
+                    if(text.includes(parsedWords.nouns[i])) {
+                        text = parsedWords.nouns[i];
+                        continue;
+                    }
                 }
-                
-				continue
+
+
+                sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
+                for (var i = 0; i < parsedWords.nouns.length; i++) {
+                  sendTextMessage(sender, parsedWords.nouns[i]);
+                }
+				continue;
 			}
-			
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200));
         }
         if (event.postback) {
-            text = JSON.stringify(event.postback)
-            sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-            continue
+            text = JSON.stringify(event.postback);
+            sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token);
+            continue;
         }
     }
-    res.sendStatus(200)
+    res.sendStatus(200);
 })
 
 // function to echo back messages
