@@ -28,9 +28,9 @@ app.get('/', function (req, res) {
 
     //console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot');
-    var text = "highlights";
-    console.log(includesCommand(text));
-    console.log(getCommandFile(text));
+    var text = "zeig mir die highlights";
+    console.log("Test includesCommand: " + includesCommand(text));
+    console.log("Test getCommandFile: " + getCommandFile(text));
 })
 
 // for Facebook verification
@@ -125,7 +125,6 @@ function getCommandFile(text) {
     var commandJson = csvToJSON(fileReader.result);
 
     for (var i = 0; i < commandJson.length; i++) {
-        console.log(commandJson[i].command);
         if(text.includes(commandJson[i].command)) {
             return commandJson[i].fileName;
         }
