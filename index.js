@@ -43,7 +43,8 @@ app.get('/webhook/', function (req, res) {
 })
 
 app.post('/webhook/', function (req, res) {
-    messaging_events = req.body.entry[0].messaging
+    messaging_events = req.body.entry[0].messaging;
+    var commandJson = csvToJSON(fileReader.result);
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i];
         sender = event.sender.id;
@@ -56,11 +57,12 @@ app.post('/webhook/', function (req, res) {
 			} else if(text === 'generic') {
                 message.sendGeneric(sender);
                 continue;
-            } else if(includesCommand(text)) {
-                message.sendJson(sender, getCommandFile(text));
-                continue;
-            }
-            message.sendText(sender, "includesCommand: " + includesCommand(text));
+            } 
+            //else if(includesCommand(text)) {
+             //   message.sendJson(sender, getCommandFile(text));
+               // continue;
+            //}
+            message.sendText(sender, "includesCommand: " + commandJson);
             message.sendText(sender, "Text received, echo: " + text.substring(0, 200));
         }
         if (event.postback) {
@@ -105,7 +107,6 @@ function convertTextToSearchQuery(text) {
 }
 
 function includesCommand(text) {
-    var commandJson = csvToJSON(fileReader.result);
     for (var i = 0; i < commandJson.length; i++) {
         if(text.includes(commandJson[i].command)) {
             return true;
@@ -124,8 +125,6 @@ function includesSearchIdentifier(text) {
 }
 
 function getCommandFile(text) {
-    var commandJson = csvToJSON(fileReader.result);
-
     for (var i = 0; i < commandJson.length; i++) {
         if(text.includes(commandJson[i].command)) {
             return commandJson[i].fileName;
