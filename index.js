@@ -137,7 +137,7 @@ function getCommandFile(text, commandJson) {
 }
 
 function csvToJSON(csv) {
-    var lines=csv.split("\r\n");
+    var lines=csv.split("\n");
     var result = [];
     var headers=lines[0].split(",");
 
