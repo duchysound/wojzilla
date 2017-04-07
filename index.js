@@ -17,6 +17,10 @@ app.use(bodyParser.json())
 // Index route
 app.get('/', function (req, res) {
     res.send('Hello world, I am a chat bot')
+
+    for (var i = 0; i < parsedWords.nouns.length; i++) {
+      alert(parsedWords.nouns[i])
+    }
 })
 
 // for Facebook verification
@@ -39,9 +43,9 @@ app.post('/webhook/', function (req, res) {
                 continue
             } else if(text.toLowerCase().includes("suche")) {
 				sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text) + " " + parsedWords.nouns.length)
-                //for (var i = parsedWords.nouns.length - 1; i >= 0; i--) {
-                //  sendTextMessage(sender, parsedWords.nouns[i])
-                //}
+                for (var i = 0; i < parsedWords.nouns.length; i++) {
+                  sendTextMessage(sender, parsedWords.nouns[i])
+                }
                 
 				continue
 			}
