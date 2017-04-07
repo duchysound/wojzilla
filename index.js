@@ -37,13 +37,12 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id;
         if (event.message && event.message.text) {
             text = event.message.text;
-            if (text === 'Generic') {
+            if (text.toLowerCase() === 'generic') {
                 sendGenericMessage(sender);
                 continue;
             } else if(text.toLowerCase().includes("suche")) {
 				text = convertTextToSearchQuery(text);
                 message.sendText(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
-                message.sendButton(sender, "web_type", "http://www.google.de", "Wie wärs mit Google?");
 				continue;
 			}
             message.sendText(sender, "Text received, echo: " + text.substring(0, 200));
