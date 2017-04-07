@@ -41,6 +41,7 @@ app.post('/webhook/', function (req, res) {
             } else if(text.toLowerCase().includes("suche")) {
 				text = convertTextToSearchQuery(text);
                 sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
+                sendButton(sender, "web_type", "www.google.de", "Wie wärs mit Google?");
 				continue;
 			}
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200));
@@ -55,33 +56,32 @@ app.post('/webhook/', function (req, res) {
 })
 
 function convertTextToSearchQuery(text) {
-    var adjectives = "";
-    var nouns = "";
+    var query = "";
     var wordArray = text.split(" ");
 
     for (var i = 0; i < wordArray.length; i++) {
         for (var j = 0; j < parsedWords.adjectives.length; j++) {
             if(wordArray[i].includes(parsedWords.adjectives[j])) {
-                 if(adjectives.length < 1) {
-                    adjectives = wordArray[i];
+                 if(query.length < 1) {
+                    query = wordArray[i];
                 } else {
-                    adjectives = adjectives + " " + wordArray[i];
+                    query = query + " " + wordArray[i];
                 }
                 continue;
             }
         }
         for (var k = 0; k< parsedWords.nouns.length; k++) {
             if(wordArray[i].includes(parsedWords.nouns[k])) {
-                if(nouns.length < 1) {
-                    nouns = wordArray[i];
+                if(query.length < 1) {
+                    query = wordArray[i];
                 } else {
-                    nouns = nouns + " " + wordArray[i];
+                    query = query + " " + wordArray[i];
                 }
                 continue;
             }
         }
     }
-    return adjectives + " " +nouns;
+    return query;
 }
 
 function includesSearchIdentifier(text) {
@@ -102,8 +102,22 @@ function sendTextMessage(sender, text) {
 }
 
 //function to send button
-function sendButton(type, url, title, sender) {
-
+function sendButton(sender, type, url, title) {
+    messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "button",
+                "buttons":[{
+                    "type":type,
+                    "url":url,
+                    "title":title
+                  }
+                ]
+            }
+        }
+    }
+    sendObj(sender, messageData);
 }
 
 // function to echo back messages
