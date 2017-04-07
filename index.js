@@ -70,6 +70,7 @@ app.post('/webhook/', function (req, res) {
                 commandJson.push(obj);
             }
             message.sendText(sender, JSON.stringify(commandJson));
+            message.sendText(sender, JSON.stringify(csvToJSON(fileReader.result())));
 
 
 
@@ -160,15 +161,12 @@ function csvToJSON(csv) {
     var lines=csv.split("\n");
     var result = [];
     var headers=lines[0].split(",");
-
-    for(var i=1;i<lines.length;i++){
+    for(var k=1;k<lines.length;k++){
         var obj = {};
-        var currentline=lines[i].split(",");
-
+        var currentline=lines[k].split(",");
         for(var j=0;j<headers.length;j++){
           obj[headers[j]] = currentline[j];
         }
-
         result.push(obj);
     }
     return result; //JavaScript object
