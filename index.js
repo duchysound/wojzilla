@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 
 // Index route
 app.get('/', function (req, res) {
-    console.log(message.sendText(0, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI("123")));
+    console.log(message.sendGeneric(0));
     res.send('Hello world, I am a chat bot');
 })
 
