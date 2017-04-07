@@ -59,7 +59,7 @@ module.exports = {
             }
         }
         sendObj(sender, messageData);
-    }
+    },
 
     sendJson: function(sender, json) {
         sendObj(sender, json);
