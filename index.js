@@ -67,9 +67,9 @@ app.post('/webhook/', function (req, res) {
             } else if(includesCommand(text, commandJson)) {
                 message.sendJson(sender, getCommandFile(text, commandJson));
                 continue;
+            } else if(text.includes("du bist krass")) {
+                message.sendText(sender, "Danke ich weiß (Y)!");
             }
-            message.sendText(sender, "includesCommand: " + JSON.stringify(commandJson));
-            message.sendText(sender, "Text received, echo: " + text.substring(0, 200));
         }
         if (event.postback) {
             text = JSON.stringify(event.postback);
