@@ -39,9 +39,9 @@ app.post('/webhook/', function (req, res) {
                 continue
             } else if(text.toLowerCase().includes("suche")) {
 				sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text) + " " + parsedWords.nouns.length)
-                for (var i = parsedWords.nouns.length - 1; i >= 0; i--) {
-                  sendTextMessage(sender, parsedWords.nouns[i])
-                }
+                //for (var i = parsedWords.nouns.length - 1; i >= 0; i--) {
+                //  sendTextMessage(sender, parsedWords.nouns[i])
+                //}
                 
 				continue
 			}
