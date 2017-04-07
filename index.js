@@ -70,7 +70,7 @@ app.post('/webhook/', function (req, res) {
                 commandJson.push(obj);
             }
             message.sendText(sender, JSON.stringify(commandJson));
-            message.sendText(sender, JSON.stringify(csvToJSON(fileReader.result())));
+            message.sendText(sender, JSON.stringify(csvToJSON(fileReader.result)));
 
 
 
