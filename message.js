@@ -60,6 +60,10 @@ module.exports = {
         }
         sendObj(sender, messageData);
     }
+
+    sendJson: function(sender, json) {
+        sendObj(sender, json);
+    }
 }
 
 var request = require('request');

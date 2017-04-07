@@ -3,7 +3,6 @@ var config = require("./config.json");
 var message = require("./message.js");
 var parsedWords = require('./words.json');
 
-
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
@@ -36,15 +35,20 @@ app.post('/webhook/', function (req, res) {
         event = req.body.entry[0].messaging[i];
         sender = event.sender.id;
         if (event.message && event.message.text) {
-            text = event.message.text;
-            if (text.toLowerCase() === 'generic') {
+            text = event.message.text.toLowerCase();
+            if (text === 'generic') {
                 message.sendGeneric(sender);
                 continue;
-            } else if(text.toLowerCase().includes("suche")) {
+            if(text.includes("suche")) {
 				text = convertTextToSearchQuery(text);
                 message.sendText(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
 				continue;
-			}
+            } else if(text.includes("highlights")) {
+                message.sendJson(sender, "./highlights.json");
+            }
+			} else if(text === 'generic') {
+                message.sendGeneric(sender);
+            }
             message.sendText(sender, "Text received, echo: " + text.substring(0, 200));
         }
         if (event.postback) {
