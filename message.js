@@ -61,7 +61,8 @@ module.exports = {
         sendObj(sender, messageData);
     },
 
-    sendJson: function(sender, json) {
+    sendJson: function(sender, jsonName) {
+        var json = require(jsonName);
         sendObj(sender, json);
     }
 }
@@ -85,4 +86,8 @@ function sendObj(sender, messageData) {
             console.log('Error: ', response.body.error);
         }
     })
+    // for local testing - if sender == 0, print messageData to console
+    if(sender === 0) {
+        console.log(messageData);
+    }
 }

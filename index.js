@@ -17,7 +17,8 @@ app.use(bodyParser.json())
 
 // Index route
 app.get('/', function (req, res) {
-    console.log(message.sendGeneric(0));
+
+    console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot');
 })
 
@@ -42,8 +43,10 @@ app.post('/webhook/', function (req, res) {
 				continue;
             } else if(text.includes("highlights")) {
                 message.sendJson(sender, "./highlights.json");
+                continue;
 			} else if(text === 'generic') {
                 message.sendGeneric(sender);
+                continue;
             }
             message.sendText(sender, "Text received, echo: " + text.substring(0, 200));
         }

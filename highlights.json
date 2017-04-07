@@ -3,29 +3,35 @@
         "type": "template",
         "payload": {
             "template_type": "generic",
-            "elements": [{
-                "title": "iPhone 7 mit 128 GB!!",
-                "subtitle": "Jetzt zugreifen und in Raten für nur 25,50/Monat (bei 48 Raten) kaufen! :)",
-                "image_url": "https://images.baur.de/is/image/empiriecom/ext/formatz/17274562.jpg",
-                "buttons": [{
-                    "type": "web_url",
-                    "url": "https://www.baur.de/p/apple-iphone-7-4-7-128-gb-smartphone/AKL10061352615#sku=39008574-0-10061352615&ref=mba&nav-i=2&nav-q=iphone%207",
-                    "title": "Zum Produkt"
+            "elements": [
+                {
+                    "title": "iPhone 7 mit 128 GB!!",
+                    "subtitle": "Jetzt zugreifen und in Raten für nur 25,50/Monat (bei 48 Raten) kaufen! :)",
+                    "image_url": "https://images.baur.de/is/image/empiriecom/ext/formatz/17274562.jpg",
+                    "buttons": [
+                        {
+                            "type": "web_url",
+                            "url": "https://www.baur.de/p/apple-iphone-7-4-7-128-gb-smartphone/AKL10061352615#sku=39008574-0-10061352615&ref=mba&nav-i=2&nav-q=iphone%207",
+                            "title": "Zum Produkt"
+                        }, {
+                            "type": "postback",
+                            "title": "Postback",
+                            "payload": "Payload for first element in a generic bubble"
+                        }
+                    ]
                 }, {
-                    "type": "postback",
-                    "title": "Postback",
-                    "payload": "Payload for first element in a generic bubble",
-                }],
-            }, {
-                "title": "Second card",
-                "subtitle": "Element #2 of an hscroll",
-                "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-                "buttons": [{
-                    "type": "postback",
-                    "title": "Postback",
-                    "payload": "Payload for second element in a generic bubble",
-                }],
-            }]
+                    "title": "Second card",
+                    "subtitle": "Element #2 of an hscroll",
+                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "buttons": [
+                        {
+                            "type": "postback",
+                            "title": "Postback",
+                            "payload": "Payload for second element in a generic bubble"
+                        }
+                    ]
+                }
+            ]
         }
     }
 }
