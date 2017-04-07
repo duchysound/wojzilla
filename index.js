@@ -42,19 +42,8 @@ app.post('/webhook/', function (req, res) {
                 sendGenericMessage(sender);
                 continue;
             } else if(text.toLowerCase().includes("suche")) {
-				var searchWord = text;
-                for (var i = 0; i < parsedWords.nouns.length; i++) {
-                    if(text.includes(parsedWords.nouns[i])) {
-                        text = parsedWords.nouns[i];
-                        continue;
-                    }
-                }
-
-
+				text = convertTextToSearchQuery(text);
                 sendTextMessage(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
-                for (var i = 0; i < parsedWords.nouns.length; i++) {
-                  sendTextMessage(sender, parsedWords.nouns[i]);
-                }
 				continue;
 			}
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200));
@@ -67,6 +56,28 @@ app.post('/webhook/', function (req, res) {
     }
     res.sendStatus(200);
 })
+
+function convertTextToSearchQuery(text) {
+    var adjectives = "";
+    var nouns = "";
+    var wordArray = text.split(" ");
+
+    for (var i = 0; i < wordArray.length; i++) {
+        for (var i = 0; i < parsedWords.adjectives.length; i++) {
+            if(wordArray[i].includes(parsedWords.adjectives[i])) {
+                adjectives = adjectives + " " + wordArray[i];
+                continue;
+            }
+        }
+        for (var i = 0; i < parsedWords.nouns.length; i++) {
+            if(wordArray[i].includes(parsedWords.nouns[i])) {
+                nouns = nouns + " " + wordArray[i];
+                continue;
+            }
+        }
+    }
+    return adjectives + " " + nouns;
+}
 
 // function to echo back messages
 function sendTextMessage(sender, text) {
@@ -133,9 +144,9 @@ function sendGenericMessage(sender) {
         }
     }, function(error, response, body) {
         if (error) {
-            console.log('Error sending messages: ', error)
+            console.log('Error sending messages: ', error);
         } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
+            console.log('Error: ', response.body.error);
         }
     })
 }
@@ -145,5 +156,5 @@ function sendGenericMessage(sender) {
 
 // Spin up the server
 app.listen(app.get('port'), function() {
-    console.log('running on port', app.get('port'))
+    console.log('running on port', app.get('port'));
 })

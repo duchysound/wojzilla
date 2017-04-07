@@ -4,6 +4,13 @@
 		"t-shirt",
 		"hut",
 		"pullover"
+	],
+	"adjectives": [
+		"gelb",
+		"schwarz",
+		"grün",
+		"groß",
+		"klein"
 	]
 
 }
