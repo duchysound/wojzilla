@@ -69,6 +69,15 @@ app.post('/webhook/', function (req, res) {
                 continue;
             } else if(text.includes("du bist krass")) {
                 message.sendText(sender, "Danke ich weiß (Y)!");
+            } else if(text.includes("orakel") || text.includes("frage")) {
+                var tempNumber = Math.random;
+                if(tempNumber < 0.4) {
+                    message.sendText(sender, "Die Antwort ist definitiv: NEIN! >:o"); 
+                } else if(tempNumber >= 0.4 && tempNumber <= 0.6 ) {
+                   message.sendText(sender, "Keine Ahnung... Frag nochmal! :-/"); 
+                } else {
+                    message.sendText(sender, "JA! Auf jeden Fall! (Y)")
+                }
             }
         }
         if (event.postback) {
