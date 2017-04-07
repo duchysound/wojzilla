@@ -42,6 +42,7 @@ app.post('/webhook/', function (req, res) {
                 for (var i parsedWords.nouns.length - 1; i >= 0; i--) {
                   sendTextMessage(sender, parsedWords.nouns[i])
                 }
+                
 				continue
 			}
 			
