@@ -38,7 +38,7 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text;
             if (text.toLowerCase() === 'generic') {
-                sendGenericMessage(sender);
+                message.sendGeneric(sender);
                 continue;
             } else if(text.toLowerCase().includes("suche")) {
 				text = convertTextToSearchQuery(text);
