@@ -62,13 +62,21 @@ function convertTextToSearchQuery(text) {
     for (var i = 0; i < wordArray.length; i++) {
         for (var j = 0; j < parsedWords.adjectives.length; j++) {
             if(wordArray[i].includes(parsedWords.adjectives[j])) {
-                adjectives = adjectives + " " + wordArray[i];
+                 if(adjectives.length < 1) {
+                    adjectives = wordArray[i];
+                } else {
+                    adjectives = adjectives + " " + wordArray[i];
+                }
                 continue;
             }
         }
         for (var k = 0; k< parsedWords.nouns.length; k++) {
             if(wordArray[i].includes(parsedWords.nouns[k])) {
-                nouns = nouns + " " + wordArray[i];
+                if(nouns.length < 1) {
+                    nouns = wordArray[i];
+                } else {
+                    nouns = nouns + " " + wordArray[i];
+                }
                 continue;
             }
         }
