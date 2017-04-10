@@ -55,7 +55,6 @@ app.post('/webhook/', function (req, res) {
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i];
         sender = event.sender.id;
-        var name = event.sender.first_name;
         if (event.message && event.message.text) {
             text = event.message.text.toLowerCase();
             var commandJson = csvToJSON(fileReader.result);
@@ -83,7 +82,7 @@ app.post('/webhook/', function (req, res) {
                     message.sendText(sender, "JA! Auf jeden Fall! (Y)")
                 }
             } else {
-                message.sendText(sender, "Hallo " + name + " wie kann ich dir weiterhelfen?");
+                message.sendText(sender, "Hallo " + event.sender + " wie kann ich dir weiterhelfen?");
             }
         }
         if (event.postback) {
