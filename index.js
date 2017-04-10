@@ -72,7 +72,7 @@ app.post('/webhook/', function (req, res) {
             } else if(text.includes("orakel") || text.includes("frage")) {
                 var tempNumber = Math.floor((Math.random() * 100) + 1);
                 if(text.includes("erik")) {
-                    message.sendText(sender, "Ich darf Fragen über Götter nicht beantworten! \u1F632")
+                    message.sendText(sender, "Ich darf Fragen über Götter nicht beantworten! 😯🙊")
                 } else if(tempNumber < 40) {
                     message.sendText(sender, "Die Antwort ist definitiv: NEIN! >:o"); 
                 } else if(tempNumber >= 40 && tempNumber <= 60 ) {
