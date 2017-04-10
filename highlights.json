@@ -20,14 +20,25 @@
                         }
                     ]
                 }, {
-                    "title": "Second card",
-                    "subtitle": "Element #2 of an hscroll",
-                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "title": "%SALE% Midseason %SALE%",
+                    "subtitle": "Hier gibt´s für die Damenwelt Schnäppchen ohne Ende! Und als Neukunde gibt´s nochmal 20% oben drauf!",
+                    "image_url": "https://www.baur.de/INTERSHOP/static/WFS/EmpirieCom-BaurDE-Site/web/EmpirieCom-BaurDE/de_DE/Iteration.01/Damen/SIS1.Damen/17kw14/02_highlight_02.jpg",
                     "buttons": [
                         {
-                            "type": "postback",
-                            "title": "Postback",
-                            "payload": "Payload for second element in a generic bubble"
+                            "type": "web_url",
+                            "url": "https://www.baur.de/sale/damen/#lmPromo=la,2,hk,SIS1-Damen,fl,SIS1-Damen.Datum.Slot.Highlightfläche2",
+                            "title": "Zu den Schnäppchen!"
+                        }
+                    ]
+                },{
+                    "title": "Brunchen bis der Osterhase kommt! 🐰",
+                    "subtitle": "Ostern steht schon bald vor der Tür, und Sie haben sich bestimmt schon erste Gedanken gemacht, wie Sie die freien Tage verbringen möchten. Unser Tipp: Wieso nicht einfach mal lange schlafen, etwas später in den Tag starten und zusammen mit Familie und Freunden bei einem leckeren Osterbrunch sich entspannt durch den Tag treiben lassen?",
+                    "image_url": "https://www.baur.de/INTERSHOP/static/WFS/EmpirieCom-BaurDE-Site/web/EmpirieCom-BaurDE/de_DE/Lifestyle/17kw14.brunch/01_einstieg_einleitung_01.jpg",
+                    "buttons": [
+                        {
+                            "type": "web_url",
+                            "url": "https://www.baur.de/lifestyle/neuestes-thema/",
+                            "title": "Zum Thema"
                         }
                     ]
                 }
