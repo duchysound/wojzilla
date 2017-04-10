@@ -12,6 +12,7 @@ var fileReader = new FileReader();
 var FileAPI = require('file-api');
 var File = FileAPI.File;
 var path = require('path');
+var request = require("request")
 
 var pub = __dirname + '/public';
 app.use(express.static(pub));
@@ -38,8 +39,6 @@ app.get('/', function (req, res) {
     var commandJson = csvToJSON(fileReader.result);
     JSON.stringify(commandJson)
     console.log(JSON.stringify(commandJson));
-
-    
 })
 
 // for Facebook verification
@@ -82,7 +81,7 @@ app.post('/webhook/', function (req, res) {
                     message.sendText(sender, "JA! Auf jeden Fall! (Y)")
                 }
             } else {
-                message.sendText(sender, "Hallo " + JSON.stringify(event) + " wie kann ich dir weiterhelfen?");
+                message.sendText(sender, "Hallo " + JSON.stringify(getUserJson(sender)) + " wie kann ich dir weiterhelfen?");
             }
         }
         if (event.postback) {
@@ -174,6 +173,20 @@ function getCommandFile(text, commandJson) {
         }
     }
     return false;
+}
+
+function getUserJson(userID) {
+    var url = "https://graph.facebook.com/v2.6/"+userID+"?access_token="+ config.token;
+    request({
+        url: url,
+        json: true
+    }, function (error, response, body) {
+        console.log(error);
+        if (!error && response.statusCode === 200) {
+            return body;
+        } 
+    })
+
 }
 
 function csvToJSON(csv) {
