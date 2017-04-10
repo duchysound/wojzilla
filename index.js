@@ -34,6 +34,7 @@ app.get('/', function (req, res) {
     //console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot ' + fileReader.result );
     var text = "zeig mir die highlights";
+    console.log(convertTextToSearchQuery(cleanupSearchQuery("Ich suche ein Bein+-.,##'\"§$%")))
     var commandJson = csvToJSON(fileReader.result);
     JSON.stringify(commandJson)
     console.log(JSON.stringify(commandJson));
@@ -54,6 +55,7 @@ app.post('/webhook/', function (req, res) {
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i];
         sender = event.sender.id;
+        var name = event.sender.first_name;
         if (event.message && event.message.text) {
             text = event.message.text.toLowerCase();
             var commandJson = csvToJSON(fileReader.result);
@@ -80,6 +82,8 @@ app.post('/webhook/', function (req, res) {
                 } else {
                     message.sendText(sender, "JA! Auf jeden Fall! (Y)")
                 }
+            } else if {
+                message.sendText(sender, "Hallo " + name + " wie kann ich dir weiterhelfen?");
             }
         }
         if (event.postback) {
@@ -150,13 +154,14 @@ function cleanupSearchQuery(text) {
         for (var j = 0; j < parsedWords.unusedWords.length; j++) {
             if(wordArray[i] == parsedWords.unusedWords[j]) {
                 remove = true;
+                continue;
             }
         }
         if(!remove) {
             newText = newText + " " + wordArray[i];
         }
     }
-    return newText;
+    return newText.replace(/\W+/g, " ");
 }
 
 function getCommandFile(text, commandJson) {
