@@ -182,6 +182,8 @@ function getUserJson(userID) {
         json: true
     }, function (error, response, body) {
         console.log(error);
+        console.log(response);
+        console.log(body);
         if (!error && response.statusCode === 200) {
             return body;
         } 
