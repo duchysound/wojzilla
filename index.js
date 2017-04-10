@@ -82,7 +82,7 @@ app.post('/webhook/', function (req, res) {
                     message.sendText(sender, "JA! Auf jeden Fall! (Y)")
                 }
             } else {
-                message.sendText(sender, "Hallo " + event.sender + " wie kann ich dir weiterhelfen?");
+                message.sendText(sender, "Hallo " + JSON.stringify(event) + " wie kann ich dir weiterhelfen?");
             }
         }
         if (event.postback) {
