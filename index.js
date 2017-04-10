@@ -34,7 +34,7 @@ app.get('/', function (req, res) {
     //console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot ' + fileReader.result );
     var text = "zeig mir die highlights";
-    console.log(convertTextToSearchQuery(cleanupSearchQuery("Ich suche ein Bein+-.,##'\"§$%")))
+    console.log(convertTextToSearchQuery(cleanupSearchQuery("suche,haus")))
     var commandJson = csvToJSON(fileReader.result);
     JSON.stringify(commandJson)
     console.log(JSON.stringify(commandJson));
@@ -147,7 +147,7 @@ function includesSearchIdentifier(text) {
 }
 
 function cleanupSearchQuery(text) {
-    var wordArray = text.split(" ");
+    var wordArray = text.replace(/\W+/g, " ").split(" ");
     var newText = "";
     for (var i = 0; i < wordArray.length; i++) {
         var remove = false;
@@ -158,10 +158,14 @@ function cleanupSearchQuery(text) {
             }
         }
         if(!remove) {
-            newText = newText + " " + wordArray[i];
+            if(newText.length < 1) {
+                newText = wordArray[i];
+            } else {
+               newText = newText + " " + wordArray[i]; 
+            }
         }
     }
-    return newText.replace(/\W+/g, " ");
+    return newText;
 }
 
 function getCommandFile(text, commandJson) {
