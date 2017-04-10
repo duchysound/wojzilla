@@ -57,21 +57,23 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text.toLowerCase();
             var commandJson = csvToJSON(fileReader.result);
-            if(includesSearchIdentifier(text)) {
-				text = convertTextToSearchQuery(text);
+            if(includesCommand(text, commandJson)) {
+                message.sendJson(sender, getCommandFile(text, commandJson));
+                continue;
+            } else if(includesSearchIdentifier(text)) {
+				text = convertTextToSearchQuery(cleanupSearchQuery(text));
                 message.sendText(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
 				continue;
 			} else if(text === 'generic') {
                 message.sendGeneric(sender);
                 continue;
-            } else if(includesCommand(text, commandJson)) {
-                message.sendJson(sender, getCommandFile(text, commandJson));
-                continue;
             } else if(text.includes("du bist krass")) {
                 message.sendText(sender, "Danke ich weiß (Y)!");
             } else if(text.includes("orakel") || text.includes("frage")) {
                 var tempNumber = Math.floor((Math.random() * 100) + 1);
-                if(tempNumber < 40) {
+                if(text.includes("erik")) {
+                    message.sendText(sender, "Ich darf Fragen über Götter nicht beantworten! ")
+                } else if(tempNumber < 40) {
                     message.sendText(sender, "Die Antwort ist definitiv: NEIN! >:o"); 
                 } else if(tempNumber >= 40 && tempNumber <= 60 ) {
                    message.sendText(sender, "Keine Ahnung... Frag nochmal! :-/"); 
@@ -90,35 +92,36 @@ app.post('/webhook/', function (req, res) {
 })
 
 function convertTextToSearchQuery(text) {
-    var query = "";
+    var adjectives = "";
+    var nouns = "";
     var wordArray = text.split(" ");
 
     for (var i = 0; i < wordArray.length; i++) {
         for (var j = 0; j < parsedWords.adjectives.length; j++) {
             if(wordArray[i].includes(parsedWords.adjectives[j])) {
-                 if(query.length < 1) {
-                    query = wordArray[i];
+                 if(adjectives.length < 1) {
+                    adjectives = wordArray[i];
                 } else {
-                    query = query + " " + wordArray[i];
+                    adjectives = adjectives + " " + wordArray[i];
                 }
                 continue;
             }
         }
         for (var k = 0; k< parsedWords.nouns.length; k++) {
             if(wordArray[i].includes(parsedWords.nouns[k])) {
-                if(query.length < 1) {
-                    query = wordArray[i];
+                if(nouns.length < 1) {
+                    nouns = wordArray[i];
                 } else {
-                    query = query + " " + wordArray[i];
+                    nouns = nouns + " " + wordArray[i];
                 }
                 continue;
             }
         }
     }
-    if(query < 1) {
-        query = text;
+    if(nouns.length < 1) {
+        return text;
     }
-    return query;
+    return adjectives + " " + nouns;
 }
 
 function includesCommand(text, commandJson) {
@@ -137,6 +140,15 @@ function includesSearchIdentifier(text) {
         }
     }
     return false;
+}
+
+function cleanupSearchQuery(text) {
+    for (var j = 0; j < parsedWords.unusedWords.length; j++) {
+        if(text.includes(parsedWords.unusedWords[j])) {
+            text = text.replace(parsedWords.unusedWords[j], "");
+        }
+    }
+    return text;
 }
 
 function getCommandFile(text, commandJson) {

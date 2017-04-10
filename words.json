@@ -16,6 +16,10 @@
 		"grün",
 		"groß",
 		"klein"
+	],
+	"unusedWords": [
+		"mir",
+		"zeig"
 	]
 
 }
