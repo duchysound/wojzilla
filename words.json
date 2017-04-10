@@ -8,18 +8,27 @@
 		"schuhe",
 		"t-shirt",
 		"hut",
-		"pullover"
+		"pullover",
+		"hose",
+		"short",
+		"boxer",
+		"unterwäsche",
+		"dessous",
+		"smartphone",
+		"notebook",
+		"waschmaschine"
 	],
 	"adjectives": [
 		"gelb",
 		"schwarz",
 		"grün",
 		"groß",
-		"klein"
+		"klein",
+		"sexy",
+		"schnell"
 	],
 	"unusedWords": [
-		"mir",
-		"zeig"
+		"mir","zeig","dir","oben","bitte","ein","eine","aus"
 	]
 
 }

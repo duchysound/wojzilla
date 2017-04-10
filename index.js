@@ -72,7 +72,7 @@ app.post('/webhook/', function (req, res) {
             } else if(text.includes("orakel") || text.includes("frage")) {
                 var tempNumber = Math.floor((Math.random() * 100) + 1);
                 if(text.includes("erik")) {
-                    message.sendText(sender, "Ich darf Fragen über Götter nicht beantworten! ")
+                    message.sendText(sender, "Ich darf Fragen über Götter nicht beantworten! \u1F632")
                 } else if(tempNumber < 40) {
                     message.sendText(sender, "Die Antwort ist definitiv: NEIN! >:o"); 
                 } else if(tempNumber >= 40 && tempNumber <= 60 ) {
@@ -143,12 +143,20 @@ function includesSearchIdentifier(text) {
 }
 
 function cleanupSearchQuery(text) {
-    for (var j = 0; j < parsedWords.unusedWords.length; j++) {
-        if(text.includes(parsedWords.unusedWords[j])) {
-            text = text.replace(parsedWords.unusedWords[j], "");
+    var wordArray = text.split(" ");
+    var newText = "";
+    for (var i = 0; i < wordArray.length; i++) {
+        var remove = false;
+        for (var j = 0; j < parsedWords.unusedWords.length; j++) {
+            if(wordArray[i] == parsedWords.unusedWords[j]) {
+                remove = true;
+            }
+        }
+        if(!remove) {
+            newText = newText + " " + wordArray[i];
         }
     }
-    return text;
+    return newText;
 }
 
 function getCommandFile(text, commandJson) {
