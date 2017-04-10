@@ -70,10 +70,10 @@ app.post('/webhook/', function (req, res) {
             } else if(text.includes("du bist krass")) {
                 message.sendText(sender, "Danke ich weiß (Y)!");
             } else if(text.includes("orakel") || text.includes("frage")) {
-                var tempNumber = Math.random;
-                if(tempNumber < 0.4) {
+                var tempNumber = Math.floor((Math.random() * 100) + 1);
+                if(tempNumber < 40) {
                     message.sendText(sender, "Die Antwort ist definitiv: NEIN! >:o"); 
-                } else if(tempNumber >= 0.4 && tempNumber <= 0.6 ) {
+                } else if(tempNumber >= 40 && tempNumber <= 60 ) {
                    message.sendText(sender, "Keine Ahnung... Frag nochmal! :-/"); 
                 } else {
                     message.sendText(sender, "JA! Auf jeden Fall! (Y)")
