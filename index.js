@@ -171,37 +171,34 @@ function cleanupSearchQuery(text) {
 
 function doSearch(sender, text) {
     var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
-    var url = config.magellanUrl + query + "&count=" + config.productCount;
+    var url = config.magellanUrl + query;
     request({
         url: url,
         json: true
     }, function (error, response, body) {
+        //console.log(response);
         console.log(body);
         if (!error && response.statusCode === 200) {
-            if(body != null && body.searchresult != null && body.searchresult.result != null) {
+                console.log(body);
+                 console.log(body.suggestresult.result[2].suggestCategoryResult.suggests[0].url);
+            if(body != null && body.suggestresult != null && body.suggestresult.result != null) {
                 var productArr = [];
-
-                message.sendText(sender, body.searchresult.result.count);
-                for(var i = 0; i < body.searchresult.result.styles.length; i++) {
-                    var styles = body.searchresult.result.styles[i];
-                    if(styles.masterSku != null && styles.images != null && styles.name != null && styles.description != null) {
-                        product.url = styles.masterSku;
-                        product.image = styles.images[0];
-                        product.name = styles.name;
-                        product.description = styles.description;
-                        productArr.push(product);
-                        console.log(product);
+                for(var i = 0; i < body.suggestresult.result.length; i++) {
+                    var suggestCategoryResult = body.suggestresult.result[i].suggestCategoryResult;
+                    for(var j = 0; j < suggestCategoryResult.suggests.length; j++) {
+                        var suggest = suggestCategoryResult.suggests[j];
+                        if(suggest.url != null && suggest.image != null && suggest.value != null) {
+                            productArr.push(suggest);
+                        }
                     }
                 }
             }
             if(productArr.length < 1) {
                 message.sendText(sender, "Leider konnte ich keine Produkte für dich finden :'( aber ich bin mir sicher hier wirst du fündig -> www.baur.de/s" + query + " 😊 ");
             } else {
-                message.sendText(sender, productArr);
                 message.sendProductSlider(sender, productArr);
             }
         }
-        message.sendText(sender, productArr);
         message.sendText(sender, "Such url: " + url);
        
     })
