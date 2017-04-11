@@ -183,7 +183,7 @@ function doSearch(sender, text) {
                 console.log(body.suggestresult.result[0]);
 
             }
-            message.sentText(sender, "Du kannst zum Beispiel sagen \"Zeig mir aktuelle Highlights\" oder \"Ich suche schwarze Schuhe von Adidas\" dann versuch ich dir zu helfen. :)");
+            message.sendText(sender, "Du kannst zum Beispiel sagen \"Zeig mir aktuelle Highlights\" oder \"Ich suche schwarze Schuhe von Adidas\" dann versuch ich dir zu helfen. :)");
         } 
     })
 
@@ -209,7 +209,7 @@ function getUserJson(sender) {
         console.log(body);
         if (!error && response.statusCode === 200) {
              message.sendText(sender, "Hey " + body.first_name +", wie kann ich dir weiterhelfen? :)");
-             message.sentText(sender, "Du kannst zum Beispiel sagen \"Zeig mir aktuelle Highlights\" oder \"Ich suche schwarze Schuhe von Adidas\" dann versuch ich dir zu helfen. :)");
+             message.sendText(sender, "Du kannst zum Beispiel sagen \"Zeig mir aktuelle Highlights\" oder \"Ich suche schwarze Schuhe von Adidas\" dann versuch ich dir zu helfen. :)");
         } 
     })
 }
