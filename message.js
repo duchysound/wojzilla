@@ -64,7 +64,7 @@ module.exports = {
     sendJson: function(sender, jsonName) {
         var json = require("./" + jsonName);
         sendObj(sender, json);
-    }
+    },
 
     sendProductSlider: function(sender, productArr) {
         messageData = {
