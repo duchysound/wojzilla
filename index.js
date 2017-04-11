@@ -179,7 +179,7 @@ function doSearch(sender, text) {
         if (!error && response.statusCode === 200) {
             if(body != null && body.searchresult != null && body.searchresult.result != null) {
                 var productArr = [];
-                message.sendText(sender, body.searchresult.count);
+                message.sendText(sender, body.searchresult.result.count);
                 for(var i = 0; i < body.searchresult.result.styles.length; i++) {
                     var styles = body.searchresult.result.styles[i];
                     if(styles.masterSku != null && styles.images != null && styles.name != null && styles.description != null) {
