@@ -181,7 +181,7 @@ function doSearch(sender, text) {
         if (!error && response.statusCode === 200) {
                 console.log(body);
                  console.log(body.suggestresult.result[2].suggestCategoryResult.suggests[0].url);
-            if(body != null && suggestresult != null && result != null) {
+            if(body != null && body.suggestresult != null && body.suggestresult.result != null) {
                 var productArr = [];
                 for(var i = 0; i < body.suggestresult.result.length; i++) {
                     var suggestCategoryResult = body.suggestresult.result[i].suggestCategoryResult;
