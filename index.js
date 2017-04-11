@@ -176,8 +176,6 @@ function doSearch(sender, text) {
         url: url,
         json: true
     }, function (error, response, body) {
-        //console.log(response);
-        console.log(body);
         if (!error && response.statusCode === 200) {
             if(body != null && body.searchresult != null && body.searchresult.result != null) {
                 var productArr = [];
