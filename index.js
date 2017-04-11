@@ -182,7 +182,8 @@ function doSearch(sender, text) {
                 console.log(body);
         }
         message.sendText(sender, "Such url: " + url);
-        message.sendText(sender, body.suggestresult.result);
+        console.log(body.suggestresult.result.suggestCategoryResult[2]);
+        message.sendText(sender, body.suggestresult.result.suggestCategoryResult[2]);
     })
 
 }
