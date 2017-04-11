@@ -181,7 +181,7 @@ function getCommandFile(text, commandJson) {
     return false;
 }
 
-function getUserJson(userID) {
+function getUserJson(sender) {
     var url = "https://graph.facebook.com/v2.6/"+userID+"?access_token="+ config.token;
     request({
         url: url,
@@ -190,7 +190,7 @@ function getUserJson(userID) {
         //console.log(response);
         console.log(body);
         if (!error && response.statusCode === 200) {
-            return body;
+             message.sendText(sender, "Hey " + body[0].first_name +" wie gehts?");
         } 
     })
 
