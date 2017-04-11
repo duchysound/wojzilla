@@ -194,6 +194,7 @@ function doSearch(sender, text) {
             if(productArr.length < 1) {
                 message.sendText(sender, "Leider konnte ich keine Produkte für dich finden :'( aber ich bin mir sicher hier wirst du fündig -> www.baur.de/s" + query + " 😊 ");
             } else {
+                message.sendText(sender, productArr);
                 message.sendProductSlider(sender, productArr);
             }
         }
