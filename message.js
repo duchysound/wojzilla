@@ -84,7 +84,7 @@ module.exports = {
                  messageData.attachment.payload.elements[i].subtitle = productArr[i].value + " | " + productArr[i].price.replace("&euro;", "€");
             }
             messageData.attachment.payload.elements[i].buttons = [];
-            messageData.attachment.payload.elements[i].buttons.push(newUrlButton(config.url + productArr[i].url, productArr[i].value));
+            messageData.attachment.payload.elements[i].buttons.push(newUrlButton(config.productUrl + productArr[i].url, productArr[i].value));
         }
         sendObj(sender, messageData);
     }
