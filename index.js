@@ -182,7 +182,7 @@ function getCommandFile(text, commandJson) {
 }
 
 function getUserJson(sender) {
-    var url = "https://graph.facebook.com/v2.6/"+userID+"?access_token="+ config.token;
+    var url = "https://graph.facebook.com/v2.6/"+sender+"?access_token="+ config.token;
     request({
         url: url,
         json: true
