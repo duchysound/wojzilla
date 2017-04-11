@@ -78,14 +78,12 @@ module.exports = {
         }
 
         for(var i = 0; i < productArr.length; i++) {
+            messageData.attachment.payload.elements.push({});
             messageData.attachment.payload.elements[i].title = productArr[i].value;
             messageData.attachment.payload.elements[i].image_url = config.imageUrl + productArr[i].image;
             if(productArr[i].price != null) {
                  messageData.attachment.payload.elements[i].subtitle = productArr[i].value + " | " + productArr[i].price.replace("&euro;", "€");
             }
-            messageData.attachment.payload.elements[i].buttons[0].type = "web_url";
-            messageData.attachment.payload.elements[i].buttons[0].url = config.productUrl + productArr[i].url;
-            messageData.attachment.payload.elements[i].buttons[0].title = "Zum Produkt";
         }
 
         sendObj(sender, messageData);
