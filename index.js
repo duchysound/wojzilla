@@ -179,9 +179,7 @@ function doSearch(sender, text) {
         //console.log(response);
         console.log(body);
         if (!error && response.statusCode === 200) {
-                console.log(body);
-                 console.log(body.searchresult.result[2].suggestCategoryResult.suggests[0].url);
-            if(body != null && body.suggestresult != null && body.suggestresult.result != null) {
+            if(body != null && body.searchresult != null && body.searchresult.result != null) {
                 var productArr = [];
                 for(var i = 0; i < body.searchresult.result.styles.length; i++) {
                     var product = body.searchresult.result.styles[i];
