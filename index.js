@@ -57,7 +57,7 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text.toLowerCase();
             var commandJson = csvToJSON(fileReader.result);
-            var userJson = getUserJson(sender);
+           
             console.log(userJson);
 
             if(includesCommand(text, commandJson)) {
@@ -82,6 +82,8 @@ app.post('/webhook/', function (req, res) {
                 } else {
                     message.sendText(sender, "JA! Auf jeden Fall! (Y)")
                 }
+            } else {
+                 userGreeting(sender);
             }
         }
         if (event.postback) {
@@ -171,7 +173,7 @@ function cleanupSearchQuery(text) {
 
 function doSearch(sender, text) {
     var query = convertTextToSearchQuery(cleanupSearchQuery(text));
-    var url = config.url + encodeURI(query);
+    var url = config.magellanUrl + encodeURI(query);
     request({
         url: url,
         json: true
@@ -196,7 +198,7 @@ function getCommandFile(text, commandJson) {
     return false;
 }
 
-function getUserJson(sender) {
+function userGreeting(sender) {
     var url = "https://graph.facebook.com/v2.6/"+sender+"?access_token="+ config.token;
     request({
         url: url,
