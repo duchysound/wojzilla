@@ -81,7 +81,7 @@ app.post('/webhook/', function (req, res) {
                     message.sendText(sender, "JA! Auf jeden Fall! (Y)")
                 }
             } else {
-                message.sendText(sender, "Hallo " + JSON.stringify(getUserJson(sender)) + " wie kann ich dir weiterhelfen?");
+                message.sendText(sender, "Hallo " + getUserJson(sender)[0].first_name + " wie kann ich dir weiterhelfen?");
             }
         }
         if (event.postback) {
@@ -184,9 +184,9 @@ function getUserJson(userID) {
         url: url,
         json: true
     }, function (error, response, body) {
-        console.log(error);
-        console.log(response);
-        console.log(body);
+        //console.log(error);
+        //console.log(response);
+        //console.log(body);
         if (!error && response.statusCode === 200) {
             return body;
         } 
