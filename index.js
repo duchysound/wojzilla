@@ -190,7 +190,7 @@ function getUserJson(sender) {
         //console.log(response);
         console.log(body);
         if (!error && response.statusCode === 200) {
-             message.sendText(sender, "Hey " + body[0].first_name +" wie gehts?");
+             message.sendText(sender, "Hey " + body.first_name +" wie gehts?");
         } 
     })
 
