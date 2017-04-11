@@ -176,9 +176,11 @@ function doSearch(sender, text) {
         url: url,
         json: true
     }, function (error, response, body) {
+        console.log(body);
         if (!error && response.statusCode === 200) {
             if(body != null && body.searchresult != null && body.searchresult.result != null) {
                 var productArr = [];
+
                 message.sendText(sender, body.searchresult.result.count);
                 for(var i = 0; i < body.searchresult.result.styles.length; i++) {
                     var styles = body.searchresult.result.styles[i];
