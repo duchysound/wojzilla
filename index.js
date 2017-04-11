@@ -180,8 +180,12 @@ function doSearch(sender, text) {
             if(body != null && body.searchresult != null && body.searchresult.result != null) {
                 var productArr = [];
                 for(var i = 0; i < body.searchresult.result.styles.length; i++) {
-                    var product = body.searchresult.result.styles[i];
-                    if(product.masterSku != null && product.images != null && product.name != null && product.description != null) {
+                    var styles = body.searchresult.result.styles[i];
+                    if(styles.masterSku != null && styles.images != null && styles.name != null && styles.description != null) {
+                        product.url = styles.masterSku;
+                        product.image = styles.images[0];
+                        product.name = styles.name;
+                        product.description = styles.description;
                         productArr.push(product);
                         console.log(product);
                     }
