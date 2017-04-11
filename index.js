@@ -106,6 +106,7 @@ function convertTextToSearchQuery(text) {
                 } else {
                     adjectives = adjectives + " " + wordArray[i];
                 }
+                continue;
             }
         }
         for (var k = 0; k< parsedWords.nouns.length; k++) {
@@ -115,6 +116,7 @@ function convertTextToSearchQuery(text) {
                 } else {
                     nouns = nouns + " " + wordArray[i];
                 }
+                continue;
             }
         }
     }
