@@ -64,8 +64,7 @@ app.post('/webhook/', function (req, res) {
                 message.sendJson(sender, getCommandFile(text, commandJson));
                 continue;
             } else if(includesSearchIdentifier(text)) {
-				text = convertTextToSearchQuery(cleanupSearchQuery(text));
-                message.sendText(sender, "Wie wärs wenn de selber suchst? Kannst alternativ auch hier drauf klicken: https://www.baur.de/s/" + encodeURI(text));
+                doSearch(sender, text);
 				continue;
 			} else if(text === 'generic') {
                 message.sendGeneric(sender);
@@ -83,8 +82,6 @@ app.post('/webhook/', function (req, res) {
                 } else {
                     message.sendText(sender, "JA! Auf jeden Fall! (Y)")
                 }
-            } else {
-                message.sendText(sender, "Hallo " + sender + " wie kann ich dir weiterhelfen?");
             }
         }
         if (event.postback) {
@@ -172,6 +169,27 @@ function cleanupSearchQuery(text) {
     return newText;
 }
 
+function doSearch(sender, text) {
+    var query = convertTextToSearchQuery(cleanupSearchQuery(text));
+    var url = config.url + encodeURI(query);
+    request({
+        url: url,
+        json: true
+    }, function (error, response, body) {
+        //console.log(response);
+        console.log(body);
+        if (!error && response.statusCode === 200) {
+            if(body.suggestresult != null && body.suggestresult.result[0] != null) {
+                console.log(body.suggestresult.result[0]);
+
+            }
+            message.sentText(sender, "Du kannst zum Beispiel sagen \"Zeig mir aktuelle Highlights\" oder \"Ich suche schwarze Schuhe von Adidas\" dann versuch ich dir zu helfen. :)");
+        } 
+    })
+
+}
+
+
 function getCommandFile(text, commandJson) {
     for (var i = 0; i < commandJson.length; i++) {
         if(text.includes(commandJson[i].command)) {
@@ -190,10 +208,10 @@ function getUserJson(sender) {
         //console.log(response);
         console.log(body);
         if (!error && response.statusCode === 200) {
-             message.sendText(sender, "Hey " + body.first_name +" wie gehts?");
+             message.sendText(sender, "Hey " + body.first_name +", wie kann ich dir weiterhelfen? :)");
+             message.sentText(sender, "Du kannst zum Beispiel sagen \"Zeig mir aktuelle Highlights\" oder \"Ich suche schwarze Schuhe von Adidas\" dann versuch ich dir zu helfen. :)");
         } 
     })
-
 }
 
 function csvToJSON(csv) {
@@ -208,8 +226,7 @@ function csvToJSON(csv) {
         }
         result.push(obj);
     }
-    return result; //JavaScript object
-    //return JSON.stringify(result); //JSON
+    return result; 
 }
 
 // Spin up the server
