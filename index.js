@@ -170,8 +170,8 @@ function cleanupSearchQuery(text) {
 }
 
 function doSearch(sender, text) {
-    var query = convertTextToSearchQuery(cleanupSearchQuery(text));
-    var url = config.magellanUrl + encodeURI(query);
+    var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
+    var url = config.magellanUrl + query;
     request({
         url: url,
         json: true
@@ -193,9 +193,11 @@ function doSearch(sender, text) {
                     }
                 }
             }
-
-
-        message.sendText(sender, "test: " + productArr);
+            if(productArr.length < 1) {
+                message.sendText(sender, "Leider konnte ich keine Produkte für dich finden :'( aber ich bin mir sicher hier wirst du fündig -> www.baur.de/s" + query + " 😊 ");
+            } else {
+                message.sendProductSlider(sender, productArr);
+            }
         }
         message.sendText(sender, "Such url: " + url);
        
