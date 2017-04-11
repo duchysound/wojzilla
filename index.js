@@ -180,10 +180,11 @@ function doSearch(sender, text) {
         console.log(body);
         if (!error && response.statusCode === 200) {
                 console.log(body);
+                 console.log(body.suggestresult.result[0].suggestCategoryResult[0]);
+        message.sendText(sender, body.suggestresult.result[0].suggestCategoryResult[0]);
         }
         message.sendText(sender, "Such url: " + url);
-        console.log(body.suggestresult.result.suggestCategoryResult[2]);
-        message.sendText(sender, body.suggestresult.result.suggestCategoryResult[2]);
+       
     })
 
 }
