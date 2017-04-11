@@ -181,7 +181,21 @@ function doSearch(sender, text) {
         if (!error && response.statusCode === 200) {
                 console.log(body);
                  console.log(body.suggestresult.result[2].suggestCategoryResult.suggests[0].url);
-        message.sendText(sender, "test: " + body.suggestresult.result[2].suggestCategoryResult.suggests[0].url);
+            if(body != null && suggestresult != null && result != null) {
+                var productArr = [];
+                for(int i = 0; i < body.suggestresult.result.length; i++) {
+                    var suggestCategoryResult = body.suggestresult.result[i].suggestCategoryResult;
+                    for(int j = 0; j < suggestCategoryResult.suggests.length; j++) {
+                        var suggest = suggestCategoryResult.suggests[j];
+                        if(suggest.url != null && suggest.image != null && suggest.value != null) {
+                            productArr.push(suggest);
+                        }
+                    }
+                }
+            }
+
+
+        message.sendText(sender, "test: " + productArr);
         }
         message.sendText(sender, "Such url: " + url);
        
