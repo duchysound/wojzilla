@@ -39,8 +39,6 @@ app.get('/', function (req, res) {
     var commandJson = csvToJSON(fileReader.result);
     JSON.stringify(commandJson)
     console.log(JSON.stringify(commandJson));
-
-    console.log(getUserJson("1384715424924980"));
 })
 
 // for Facebook verification
@@ -59,6 +57,11 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text.toLowerCase();
             var commandJson = csvToJSON(fileReader.result);
+            var userJson = getUserJson(sender);
+            console.log(userJson.name);
+
+            console.log(userJson);
+
             if(includesCommand(text, commandJson)) {
                 message.sendJson(sender, getCommandFile(text, commandJson));
                 continue;
