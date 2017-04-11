@@ -83,16 +83,8 @@ module.exports = {
             if(productArr[i].price != null) {
                  messageData.attachment.payload.elements[i].subtitle = productArr[i].value + " | " + productArr[i].price.replace("&euro;", "€");
             }
-            messageData.attachement.payload.elements[i].buttons = [{
-                "type": "web_url",
-                "url": config.url + productArr[i].url,
-                "title": "Zum Produkt"
-            }, {
-                "type": "postback",
-                "title": "Postback",
-                "payload": "Payload for first element in a generic bubble",
-            }]
-
+            messageData.attachment.payload.elements[i].buttons = [];
+            messageData.attachment.payload.elements[i].buttons.push(newUrlButton(config.url + productArr[i].url, productArr[i].value));
         }
         sendObj(sender, messageData);
     }
@@ -121,4 +113,13 @@ function sendObj(sender, messageData) {
     if(sender === 0) {
         console.log(messageData);
     }
+}
+
+function newUrlButton(url, title) {
+    button = {
+        "type": "web_url",
+        "url": url,
+        "title": title
+    }
+    return button;
 }
