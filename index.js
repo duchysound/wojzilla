@@ -183,9 +183,9 @@ function doSearch(sender, text) {
                  console.log(body.suggestresult.result[2].suggestCategoryResult.suggests[0].url);
             if(body != null && suggestresult != null && result != null) {
                 var productArr = [];
-                for(int i = 0; i < body.suggestresult.result.length; i++) {
+                for(var i = 0; i < body.suggestresult.result.length; i++) {
                     var suggestCategoryResult = body.suggestresult.result[i].suggestCategoryResult;
-                    for(int j = 0; j < suggestCategoryResult.suggests.length; j++) {
+                    for(var j = 0; j < suggestCategoryResult.suggests.length; j++) {
                         var suggest = suggestCategoryResult.suggests[j];
                         if(suggest.url != null && suggest.image != null && suggest.value != null) {
                             productArr.push(suggest);
