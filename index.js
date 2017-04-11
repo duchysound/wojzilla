@@ -179,12 +179,9 @@ function doSearch(sender, text) {
         //console.log(response);
         console.log(body);
         if (!error && response.statusCode === 200) {
-            if(body.suggestresult != null && body.suggestresult.result[0] != null) {
-                console.log(body.suggestresult.result[0]);
-
-            }
-            message.sendText(sender, "Du kannst zum Beispiel sagen \"Zeig mir aktuelle Highlights\" oder \"Ich suche schwarze Schuhe von Adidas\" dann versuch ich dir zu helfen. :)");
-        } 
+                console.log(body);
+        }
+        message.sendText(sender, "Such url: " + url);
     })
 
 }
