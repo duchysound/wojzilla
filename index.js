@@ -39,6 +39,8 @@ app.get('/', function (req, res) {
     var commandJson = csvToJSON(fileReader.result);
     JSON.stringify(commandJson)
     console.log(JSON.stringify(commandJson));
+
+    console.log(getUserJson(0))
 })
 
 // for Facebook verification
@@ -81,7 +83,7 @@ app.post('/webhook/', function (req, res) {
                     message.sendText(sender, "JA! Auf jeden Fall! (Y)")
                 }
             } else {
-                message.sendText(sender, "Hallo " + getUserJson(sender).first_name + " wie kann ich dir weiterhelfen?");
+                message.sendText(sender, "Hallo " + sender + " wie kann ich dir weiterhelfen?");
             }
         }
         if (event.postback) {
@@ -188,7 +190,7 @@ function getUserJson(userID) {
         //console.log(response);
         console.log(body);
         if (!error && response.statusCode === 200) {
-            return body;
+            return JSON.parse(body);
         } 
     })
 
