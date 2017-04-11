@@ -40,7 +40,7 @@ app.get('/', function (req, res) {
     JSON.stringify(commandJson)
     console.log(JSON.stringify(commandJson));
 
-    console.log(getUserJson(0))
+    console.log(getUserJson("1384715424924980"));
 })
 
 // for Facebook verification
