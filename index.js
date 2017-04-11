@@ -59,7 +59,6 @@ app.post('/webhook/', function (req, res) {
             var commandJson = csvToJSON(fileReader.result);
             var userJson = getUserJson(sender);
             console.log(userJson);
-            console.log(userJson[0].first_name);
 
             if(includesCommand(text, commandJson)) {
                 message.sendJson(sender, getCommandFile(text, commandJson));
@@ -189,9 +188,9 @@ function getUserJson(userID) {
         json: true
     }, function (error, response, body) {
         //console.log(response);
-        //console.log(body);
+        console.log(body);
         if (!error && response.statusCode === 200) {
-            return JSON.stringify(body);
+            return body;
         } 
     })
 
