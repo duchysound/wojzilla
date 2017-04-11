@@ -76,7 +76,6 @@ module.exports = {
                 }
             }
         }
-
         for(var i = 0; i < productArr.length; i++) {
             messageData.attachment.payload.elements.push({});
             messageData.attachment.payload.elements[i].title = productArr[i].value;
@@ -84,8 +83,12 @@ module.exports = {
             if(productArr[i].price != null) {
                  messageData.attachment.payload.elements[i].subtitle = productArr[i].value + " | " + productArr[i].price.replace("&euro;", "€");
             }
-        }
+            messageData.attachement.payload.elements[i].buttons = [{},{}];
+            messageData.attachement.payload.elements[i].buttons[0].type = "web_url";
+            messageData.attachement.payload.elements[i].buttons[0].url = config.url + productArr[i].url;
+            messageData.attachement.payload.elements[i].buttons[0].type = "Zum Produkt";
 
+        }
         sendObj(sender, messageData);
     }
 }
