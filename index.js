@@ -35,7 +35,7 @@ app.get('/', function (req, res) {
     //console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot ' + fileReader.result );
     var text = "zeig mir die highlights";
-    console.log(convertTextToSearchQuery(cleanupSearchQuery("suche,haus")))
+    console.log(convertTextToSearchQuery(cleanupSearchQuery("suche nach einer gelben hose")))
     var commandJson = csvToJSON(fileReader.result);
     JSON.stringify(commandJson)
     console.log(JSON.stringify(commandJson));
@@ -110,7 +110,7 @@ function convertTextToSearchQuery(text) {
             }
         }
         for (var k = 0; k< parsedWords.nouns.length; k++) {
-            if(wordArray[i].includes(parsedWords.nouns[k])) {
+            if(wordArray[i].includes(parsedWords.nouns[k]) && parsedWords.nouns[k].trim().length > 1) {
                 if(nouns.length < 1) {
                     nouns = wordArray[i];
                 } else {
