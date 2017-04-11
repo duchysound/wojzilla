@@ -83,11 +83,15 @@ module.exports = {
             if(productArr[i].price != null) {
                  messageData.attachment.payload.elements[i].subtitle = productArr[i].value + " | " + productArr[i].price.replace("&euro;", "€");
             }
-            messageData.attachement.payload.elements[i].buttons.push({});
-
-            messageData.attachement.payload.elements[i].buttons[0].type = "web_url";
-            messageData.attachement.payload.elements[i].buttons[0].url = config.url + productArr[i].url;
-            messageData.attachement.payload.elements[i].buttons[0].type = "Zum Produkt";
+            messageData.attachement.payload.elements[i].buttons = [{
+                "type": "web_url",
+                "url": config.url + productArr[i].url,
+                "title": "Zum Produkt"
+            }, {
+                "type": "postback",
+                "title": "Postback",
+                "payload": "Payload for first element in a generic bubble",
+            }]
 
         }
         sendObj(sender, messageData);
