@@ -83,7 +83,8 @@ module.exports = {
             if(productArr[i].price != null) {
                  messageData.attachment.payload.elements[i].subtitle = productArr[i].value + " | " + productArr[i].price.replace("&euro;", "€");
             }
-            messageData.attachement.payload.elements[i].buttons = [{},{}];
+            messageData.attachement.payload.elements[i].buttons.push({});
+
             messageData.attachement.payload.elements[i].buttons[0].type = "web_url";
             messageData.attachement.payload.elements[i].buttons[0].url = config.url + productArr[i].url;
             messageData.attachement.payload.elements[i].buttons[0].type = "Zum Produkt";
