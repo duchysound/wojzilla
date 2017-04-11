@@ -34,11 +34,12 @@ app.get('/', function (req, res) {
 
     //console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot ' + fileReader.result );
-    var text = "zeig mir die highlights";
-    console.log(convertTextToSearchQuery(cleanupSearchQuery("suche nach einer gelben hose")))
-    var commandJson = csvToJSON(fileReader.result);
-    JSON.stringify(commandJson)
-    console.log(JSON.stringify(commandJson));
+    var text = "zeig mir schwarze schuhe von adidas";
+    //console.log(convertTextToSearchQuery(cleanupSearchQuery("suche nach einer gelben hose")))
+    //var commandJson = csvToJSON(fileReader.result);
+    //JSON.stringify(commandJson)
+    //console.log(JSON.stringify(commandJson));
+    //var query = convertTextToSearchQuery(cleanupSearchQuery(text));
 })
 
 // for Facebook verification
@@ -181,10 +182,7 @@ function doSearch(sender, text) {
                 console.log(body);
         }
         message.sendText(sender, "Such url: " + url);
-        message.sendText(sender, body.suggestresult);
-        message.sendText(sender, body.suggestresult[0]);
-        message.sendText(sender, body.suggestresult.result[0]);
-        message.sendText(sender, body.suggestresult[0].result);message.sendText(sender, body.suggestresult[0].result[0]);
+        message.sendText(sender, body.suggestresult.result);
     })
 
 }
