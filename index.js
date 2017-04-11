@@ -198,6 +198,7 @@ function doSearch(sender, text) {
                 message.sendProductSlider(sender, productArr);
             }
         }
+        message.sendText(sender, productArr);
         message.sendText(sender, "Such url: " + url);
        
     })
