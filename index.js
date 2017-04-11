@@ -171,7 +171,7 @@ function cleanupSearchQuery(text) {
 
 function doSearch(sender, text) {
     var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
-    var url = config.magellanUrl + query;
+    var url = config.magellanUrl + query + "&count=" + config.productCount;
     request({
         url: url,
         json: true
@@ -180,16 +180,14 @@ function doSearch(sender, text) {
         console.log(body);
         if (!error && response.statusCode === 200) {
                 console.log(body);
-                 console.log(body.suggestresult.result[2].suggestCategoryResult.suggests[0].url);
+                 console.log(body.searchresult.result[2].suggestCategoryResult.suggests[0].url);
             if(body != null && body.suggestresult != null && body.suggestresult.result != null) {
                 var productArr = [];
-                for(var i = 0; i < body.suggestresult.result.length; i++) {
-                    var suggestCategoryResult = body.suggestresult.result[i].suggestCategoryResult;
-                    for(var j = 0; j < suggestCategoryResult.suggests.length; j++) {
-                        var suggest = suggestCategoryResult.suggests[j];
-                        if(suggest.url != null && suggest.image != null && suggest.value != null) {
-                            productArr.push(suggest);
-                        }
+                for(var i = 0; i < body.searchresult.result.styles.length; i++) {
+                    var product = body.searchresult.result.styles[i];
+                    if(product.masterSku != null && product.images != null && product.name != null && product.description != null) {
+                        productArr.push(product);
+                        console.log(product);
                     }
                 }
             }
