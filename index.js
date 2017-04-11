@@ -57,9 +57,6 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text.toLowerCase();
             var commandJson = csvToJSON(fileReader.result);
-           
-            console.log(userJson);
-
             if(includesCommand(text, commandJson)) {
                 message.sendJson(sender, getCommandFile(text, commandJson));
                 continue;
