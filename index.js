@@ -188,11 +188,10 @@ function getUserJson(userID) {
         url: url,
         json: true
     }, function (error, response, body) {
-        console.log(error);
         //console.log(response);
-        console.log(body);
+        //console.log(body);
         if (!error && response.statusCode === 200) {
-            return body;
+            return JSON.stringify(body);
         } 
     })
 
