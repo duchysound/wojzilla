@@ -188,7 +188,7 @@ function doSearch(sender, text) {
                         if(suggest.url != null && suggest.image != null && suggest.value != null) {
                             product = {};
                             product.title = suggest.value;
-                            product.url = productUrl + suggest.url;
+                            product.id = suggest.url;
                             if(styles[i].images != null) {
                               product.image_url = config.imageUrl + styles[i].images[0];  
                             }
@@ -231,7 +231,7 @@ function doNewSearch(sender, text) {
                 for(var i = 0; i < styles.length; i++) {
                     product = {};
                     product.title = styles[i].name;
-                    product.url = productUrl + styles[i].masterSku;
+                    product.id = styles[i].masterSku;
                     if(styles[i].images != null) {
                       product.image_url = styles[i].images[0];  
                     }

@@ -72,14 +72,14 @@ module.exports = {
                 "type": "template",
                 "payload": {
                     "template_type": "generic",
-                    "elements": []
+                    "elements": productArr
                 }
             }
         }
         for(var i = 0; i < productArr.length; i++) {
-            messageData.attachment.payload.elements.push({productArr[i]});
+            
             messageData.attachment.payload.elements[i].buttons = [];
-            messageData.attachment.payload.elements[i].buttons.push(newUrlButton(config.productUrl + productArr[i].url, "Zum Produkt"));
+            messageData.attachment.payload.elements[i].buttons.push(newUrlButton(config.productUrl + productArr[i].id, "Zum Produkt"));
         }
         sendObj(sender, messageData);
     }
