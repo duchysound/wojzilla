@@ -63,9 +63,7 @@ app.post('/webhook/', function (req, res) {
                 message.sendJson(sender, getCommandFile(text, commandJson));
                 continue;
             } else if(includesSearchIdentifier(text)) {
-                doSuggestSearch(sender, text);
-                
-                doSerpSearch(sender, text);
+                doSearch(sender, text);
 				continue;
 			} else if(text === 'generic') {
                 message.sendGeneric(sender);
@@ -172,45 +170,7 @@ function cleanupSearchQuery(text) {
     return newText;
 }
 
-function doSuggestSearch(sender, text) {
-    var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
-    var url = config.magellanUrl + query;
-    request({
-        url: url,
-        json: true
-    }, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            if(body != null && body.suggestresult != null && body.suggestresult.result != null) {
-                var productArr = [];
-                for(var i = 0; i < body.suggestresult.result.length; i++) {
-                    var suggestCategoryResult = body.suggestresult.result[i].suggestCategoryResult;
-                    for(var j = 0; j < suggestCategoryResult.suggests.length; j++) {
-                        var suggest = suggestCategoryResult.suggests[j];
-                        if(suggest.url != null && suggest.image != null && suggest.value != null) {
-                            product = {};
-                            product.title = suggest.value;
-                            product.id = suggest.url;
-                            product.image_url = config.imageUrl + suggest.image;  
-                            product.price = suggest.price.replace("&euro;", "€");
-                            product.subtitle = product.title + " | " + product.price;
-                            productArr.push(product);
-                        }
-                    }
-                }
-            }
-            if(productArr.length < 1) {
-                message.sendText(sender, "Leider konnte ich keine Produkte für dich finden :'( aber ich bin mir sicher hier wirst du fündig -> www.baur.de/s" + query + " 😊 ");
-            } else {
-                message.sendProductSlider(sender, productArr);
-            }
-        }
-        message.sendText(sender, "Such url: " + url);
-       
-    })
-
-}
-
-function doSerpSearch(sender, text) {
+function doSearch(sender, text) {
     var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
     var url = config.searchUrl + query;
 
