@@ -11,10 +11,8 @@ var FileReader = require('filereader');
 var fileReader = new FileReader();
 var FileAPI = require('file-api');
 var File = FileAPI.File;
-var path = require('path');
-var request = require("request");
 
-var requestify = require('requestify');
+var request = require('request');
 
 var pub = __dirname + '/public';
 app.use(express.static(pub));
@@ -213,13 +211,10 @@ function doNewSearch(sender, text) {
     var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
     var url = config.searchUrl + query;
 
-    requestify.get(url).then(function(response) {
-        // Get the response body (JSON parsed or jQuery object for XMLs)
-        console.log(response.getBody());
+    request({ url: url, followRedirect: false }, function (err, res, body) {
+      console.log(err) 
     });
 }
-
-
 
 
 function getCommandFile(text, commandJson) {
