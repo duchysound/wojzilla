@@ -211,6 +211,8 @@ function doNewSearch(sender, text) {
     var url = config.searchUrl + query;
     request({
         url: url,
+        method: 'GET',
+        followAllRedirect: false,
         json: true
     }, function (error, response, body) {
         //console.log(response);
@@ -218,8 +220,6 @@ function doNewSearch(sender, text) {
         if (!error && response.statusCode === 200) {
             console.log(body);
             console.log(body.searchresult.result);
-            
-            
         }
         message.sendText(sender, response.statusCode);
         message.sendText(sender, "Such url: " + url);
