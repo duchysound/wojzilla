@@ -189,9 +189,8 @@ function doSearch(sender, text) {
                             product = {};
                             product.title = suggest.value;
                             product.id = suggest.url;
-                            if(styles[i].images != null) {
-                              product.image_url = config.imageUrl + styles[i].images[0];  
-                            }
+                            product.image_url = config.imageUrl + suggest.image;  
+                            
                             product.price = suggest.price.replace("&euro;", "€");
                             product.subtitle = product.title + " | " + product.price;
                             productArr.push(product);
