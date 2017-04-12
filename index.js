@@ -11,8 +11,8 @@ var FileReader = require('filereader');
 var fileReader = new FileReader();
 var FileAPI = require('file-api');
 var File = FileAPI.File;
-var path = require('path');
-var request = require("request")
+var request = require("request");
+var rp = require('request-promise');
 
 var pub = __dirname + '/public';
 app.use(express.static(pub));
@@ -35,6 +35,7 @@ app.get('/', function (req, res) {
     //console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot ' + fileReader.result );
     var text = "zeig mir schwarze schuhe von adidas";
+    doNewSearch(0, text);
     //console.log(convertTextToSearchQuery(cleanupSearchQuery("suche nach einer gelben hose")))
     //var commandJson = csvToJSON(fileReader.result);
     //JSON.stringify(commandJson)
@@ -208,23 +209,13 @@ function doSearch(sender, text) {
 
 function doNewSearch(sender, text) {
     var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
-    var url = config.searchUrl + query;
-    request({
-        url: url,
-        method: 'GET',
-        followAllRedirect: false,
+    var options = {
+        uri: config.searchUrl + query,
         json: true
-    }, function (error, response, body) {
-        //console.log(response);
-        //console.log(body);
-        if (!error && response.statusCode === 200) {
-            console.log(body);
-            console.log(body.searchresult.result);
-        }
-        message.sendText(sender, response.statusCode);
-        message.sendText(sender, error);
-        message.sendText(sender, "Such url: " + url);
-       
+    }
+
+    rp(options).then(function(repos) {
+        console.log('User has %d repos', repos.length);
     })
 
 }
