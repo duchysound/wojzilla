@@ -63,8 +63,9 @@ app.post('/webhook/', function (req, res) {
                 message.sendJson(sender, getCommandFile(text, commandJson));
                 continue;
             } else if(includesSearchIdentifier(text)) {
-                doSearch(sender, text);
-                doNewSearch(sender, text);
+                doSuggestSearch(sender, text);
+                
+                doSerpSearch(sender, text);
 				continue;
 			} else if(text === 'generic') {
                 message.sendGeneric(sender);
@@ -171,7 +172,7 @@ function cleanupSearchQuery(text) {
     return newText;
 }
 
-function doSearch(sender, text) {
+function doSuggestSearch(sender, text) {
     var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
     var url = config.magellanUrl + query;
     request({
@@ -190,7 +191,6 @@ function doSearch(sender, text) {
                             product.title = suggest.value;
                             product.id = suggest.url;
                             product.image_url = config.imageUrl + suggest.image;  
-                            
                             product.price = suggest.price.replace("&euro;", "€");
                             product.subtitle = product.title + " | " + product.price;
                             productArr.push(product);
@@ -210,7 +210,7 @@ function doSearch(sender, text) {
 
 }
 
-function doNewSearch(sender, text) {
+function doSerpSearch(sender, text) {
     var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
     var url = config.searchUrl + query;
 
