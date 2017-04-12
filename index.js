@@ -11,8 +11,10 @@ var FileReader = require('filereader');
 var fileReader = new FileReader();
 var FileAPI = require('file-api');
 var File = FileAPI.File;
+var path = require('path');
 var request = require("request");
-var rp = require('request-promise');
+
+var requestify = require('requestify');
 
 var pub = __dirname + '/public';
 app.use(express.static(pub));
@@ -209,15 +211,12 @@ function doSearch(sender, text) {
 
 function doNewSearch(sender, text) {
     var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
-    var options = {
-        uri: config.searchUrl + query,
-        json: true
-    }
+    var url = config.searchUrl + query;
 
-    rp(options).then(function(repos) {
-        console.log('User has %d repos', repos.length);
-    })
-
+    requestify.get(url).then(function(response) {
+        // Get the response body (JSON parsed or jQuery object for XMLs)
+        console.log(response.getBody());
+    });
 }
 
 
