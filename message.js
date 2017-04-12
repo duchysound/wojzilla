@@ -72,12 +72,16 @@ module.exports = {
                 "type": "template",
                 "payload": {
                     "template_type": "generic",
-                    "elements": productArr
+                    "elements": []
                 }
             }
         }
         for(var i = 0; i < productArr.length; i++) {
-            
+            messageData.attachment.payload.elements[i].title = productArr[i].title;
+            messageData.attachment.payload.elements[i].image_url = config.image_url;
+            if(productArr[i].price != null) {
+                 messageData.attachment.payload.elements[i].subtitle = productArr[i].subtitle;
+            }
             messageData.attachment.payload.elements[i].buttons = [];
             messageData.attachment.payload.elements[i].buttons.push(newUrlButton(config.productUrl + productArr[i].id, "Zum Produkt"));
         }
