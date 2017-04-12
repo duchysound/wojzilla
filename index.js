@@ -193,7 +193,7 @@ function doSearch(sender, text) {
                               product.image_url = config.imageUrl + styles[i].images[0];  
                             }
                             product.price = suggest.price.replace("&euro;", "€");
-                            product.subtitle = product.title + " | " product.price;
+                            product.subtitle = product.title + " | " + product.price;
                             productArr.push(product);
                         }
                     }
@@ -245,7 +245,7 @@ function doNewSearch(sender, text) {
 
                 if(productArr.length < 1) {
                     message.sendText(sender, "Leider konnte ich keine Produkte für dich finden :'( aber ich bin mir sicher hier wirst du fündig -> www.baur.de/s" + query + " 😊 ");
-                } else {
+                } else {t
                     message.sendProductSlider(sender, productArr);
                 }
                 
