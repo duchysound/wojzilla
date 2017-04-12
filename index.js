@@ -178,11 +178,7 @@ function doSearch(sender, text) {
         url: url,
         json: true
     }, function (error, response, body) {
-        //console.log(response);
-        //console.log(body);
         if (!error && response.statusCode === 200) {
-            //console.log(body);
-            //console.log(body.suggestresult.result[2].suggestCategoryResult.suggests[0].url);
             if(body != null && body.suggestresult != null && body.suggestresult.result != null) {
                 var productArr = [];
                 for(var i = 0; i < body.suggestresult.result.length; i++) {
@@ -190,7 +186,15 @@ function doSearch(sender, text) {
                     for(var j = 0; j < suggestCategoryResult.suggests.length; j++) {
                         var suggest = suggestCategoryResult.suggests[j];
                         if(suggest.url != null && suggest.image != null && suggest.value != null) {
-                            productArr.push(suggest);
+                            product = {};
+                            product.title = suggest.value;
+                            product.url = productUrl + suggest.url;
+                            if(styles[i].images != null) {
+                              product.image_url = config.imageUrl + styles[i].images[0];  
+                            }
+                            product.price = suggest.price.replace("&euro;", "€");
+                            product.subtitle = product.title + " | " product.price;
+                            productArr.push(product);
                         }
                     }
                 }
@@ -211,8 +215,43 @@ function doNewSearch(sender, text) {
     var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
     var url = config.searchUrl + query;
 
-    request({ url: url, followRedirect: false }, function (err, res, body) {
-      console.log(err) 
+    request({ 
+        url: url, 
+        followRedirect: false,
+        json: true,
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.116 Safari/537.36'
+        }
+    }, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            console.log("searchresult: " + body.searchresult);
+            if(body != null && body.searchresult != null && body.searchresult.result != null) {
+                var productArr = [];
+                var styles = body.searchresult.result.styles;
+                for(var i = 0; i < styles.length; i++) {
+                    product = {};
+                    product.title = styles[i].name;
+                    product.url = productUrl + styles[i].masterSku;
+                    if(styles[i].images != null) {
+                      product.image_url = styles[i].images[0];  
+                    }
+                    product.subtitle = styles[i].description;
+                    if(styles[i].oldPrice != null) {
+                        product.oldPrice = styles[i].oldPrice.value; 
+                    }
+                    product.price = styles[i].price.value;
+                    productArr.push(product);
+                }
+
+                if(productArr.length < 1) {
+                    message.sendText(sender, "Leider konnte ich keine Produkte für dich finden :'( aber ich bin mir sicher hier wirst du fündig -> www.baur.de/s" + query + " 😊 ");
+                } else {
+                    message.sendProductSlider(sender, productArr);
+                }
+                
+                console.log(JSON.stringify(productArr));
+            }
+        }
     });
 }
 
