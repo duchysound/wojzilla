@@ -79,7 +79,7 @@ module.exports = {
         for(var i = 0; i < productArr.length; i++) {
             messageData.attachment.payload.elements.push({});
             messageData.attachment.payload.elements[i].title = productArr[i].title;
-            messageData.attachment.payload.elements[i].image_url = config.image_url;
+            messageData.attachment.payload.elements[i].image_url = productArr[i].image_url;
             if(productArr[i].price != null) {
                  messageData.attachment.payload.elements[i].subtitle = productArr[i].subtitle;
             }

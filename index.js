@@ -232,7 +232,7 @@ function doSerpSearch(sender, text) {
                     product.title = styles[i].name;
                     product.id = styles[i].masterSku;
                     if(styles[i].images != null) {
-                      product.image_url = styles[i].images[0];  
+                      product.image_url = config.imageUrl + styles[i].images[0];  
                     }
                     product.subtitle = styles[i].description;
                     if(styles[i].oldPrice != null) {
