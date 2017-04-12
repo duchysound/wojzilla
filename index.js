@@ -177,10 +177,10 @@ function doSearch(sender, text) {
         json: true
     }, function (error, response, body) {
         //console.log(response);
-        console.log(body);
+        //console.log(body);
         if (!error && response.statusCode === 200) {
-                console.log(body);
-                 console.log(body.suggestresult.result[2].suggestCategoryResult.suggests[0].url);
+            //console.log(body);
+            //console.log(body.suggestresult.result[2].suggestCategoryResult.suggests[0].url);
             if(body != null && body.suggestresult != null && body.suggestresult.result != null) {
                 var productArr = [];
                 for(var i = 0; i < body.suggestresult.result.length; i++) {
@@ -204,6 +204,29 @@ function doSearch(sender, text) {
     })
 
 }
+
+function doNewSearch(sender, text) {
+    var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
+    var url = config.searchUrl + query;
+    request({
+        url: url,
+        json: true
+    }, function (error, response, body) {
+        //console.log(response);
+        //console.log(body);
+        if (!error && response.statusCode === 200) {
+            console.log(body);
+            console.log(body.searchresult.result);
+            message.sendProductSlider(sender, response.statusCode);
+            
+        }
+        message.sendText(sender, "Such url: " + url);
+       
+    })
+
+}
+
+
 
 
 function getCommandFile(text, commandJson) {
