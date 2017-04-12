@@ -222,6 +222,7 @@ function doNewSearch(sender, text) {
             console.log(body.searchresult.result);
         }
         message.sendText(sender, response.statusCode);
+        message.sendText(sender, error);
         message.sendText(sender, "Such url: " + url);
        
     })
