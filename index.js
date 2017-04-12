@@ -63,6 +63,7 @@ app.post('/webhook/', function (req, res) {
                 continue;
             } else if(includesSearchIdentifier(text)) {
                 doSearch(sender, text);
+                doNewSearch(sender, text);
 				continue;
 			} else if(text === 'generic') {
                 message.sendGeneric(sender);
