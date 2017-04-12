@@ -221,7 +221,7 @@ function doNewSearch(sender, text) {
             
             
         }
-        message.sentText(sender, response.statusCode);
+        message.sendText(sender, response.statusCode);
         message.sendText(sender, "Such url: " + url);
        
     })
