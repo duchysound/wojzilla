@@ -218,9 +218,10 @@ function doNewSearch(sender, text) {
         if (!error && response.statusCode === 200) {
             console.log(body);
             console.log(body.searchresult.result);
-            message.sendProductSlider(sender, response.statusCode);
+            
             
         }
+        message.sentText(sender, response.statusCode);
         message.sendText(sender, "Such url: " + url);
        
     })
