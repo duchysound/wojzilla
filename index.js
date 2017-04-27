@@ -12,8 +12,6 @@ var fileReader = new FileReader();
 var FileAPI = require('file-api');
 var File = FileAPI.File;
 
-var deasync = require("deasync");
-
 var request = require('request');
 
 var pub = __dirname + '/public';
@@ -172,7 +170,7 @@ function doSearch(sender, text) {
     });
 }
 
-var doSimilarSearch = deasync(function(sender, similiarProductId) {
+function doSimilarSearch (sender, similiarProductId) {
     var url = config.similarSearchUrl + similiarProductId;
 
     request({ 
@@ -195,7 +193,7 @@ var doSimilarSearch = deasync(function(sender, similiarProductId) {
                     if(products[i].similarId != null) {
                         product.similarId = products[i].similarId;
                     } else {
-                        product.similarId = existSimilarProducts(orderNumber.substring(0, orderNumber.length - 2));
+                        product.similarId = orderNumber.substring(0, orderNumber.length - 2);
                     }
                     if(products[i].image != null) {
                       product.image_url = config.imageUrl + products[i].image;  
@@ -216,27 +214,7 @@ var doSimilarSearch = deasync(function(sender, similiarProductId) {
             }
         }
     });
-})
-
-var existSimilarProducts = deasync(function(similarId) {
-    var url = config.similarSearchUrl + similarId;
-    console.log(url);
-
-    request({ 
-        url: url, 
-        followRedirect: false,
-        json: true,
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.116 Safari/537.36'
-        }
-    }, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            if(body != null && body.productROs != null) {
-                return similarId;
-            }
-        }
-    });
-});
+}
 
 
 function convertTextToSearchQuery(text) {
