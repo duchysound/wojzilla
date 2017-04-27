@@ -192,8 +192,24 @@ function doSimilarSearch(sender, similiarProductId) {
                     orderNumber = products[i].orderNumberWithPromotion;
                     if(products[i].similarId != null) {
                         product.similarId = products[i].similarId;
-                    } else if(existSimilarProducts(orderNumber.substring(0, orderNumber.length - 2))){
-                        product.similarId = orderNumber.substring(0, orderNumber.length - 2);
+                    } else {
+                        var url = config.similarSearchUrl + orderNumber.substring(0, orderNumber.length - 2));
+                        console.log(url);
+                        request({ 
+                            url: url, 
+                            followRedirect: false,
+                            json: true,
+                            headers: {
+                                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.116 Safari/537.36'
+                            }
+                        }, function (error, response, body) {
+                            if (!error && response.statusCode === 200) {
+                                console.log(body.productROs);
+                                if(body != null && body.productROs != null) {
+                                     product.similarId = orderNumber.substring(0, orderNumber.length - 2);
+                                }
+                            }
+                        });
                     }
                     if(products[i].image != null) {
                       product.image_url = config.imageUrl + products[i].image;  
