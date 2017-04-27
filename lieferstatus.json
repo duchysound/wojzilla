@@ -3,52 +3,47 @@
     "type":"template",
     "payload":{
       "template_type":"receipt",
-      "recipient_name":"Stephane Crozatier",
+      "recipient_name":"Wojta Prandell",
       "order_number":"12345678902",
       "currency":"EUR",
       "payment_method":"Visa 2345",        
-      "order_url":"http://petersapparel.parseapp.com/order?order_id=123456",
+      "order_url":"https://www.baur.de/order?order_id=123456",
       "timestamp":"1428444852", 
       "elements":[
         {
-          "title":"Classic White T-Shirt",
-          "subtitle":"100% Soft and Luxurious Cotton",
+          "title":"LASCANA Set: Push-up-BH + Panty (2-tlg.)",
+          "subtitle":"LASCANA Set: Push-up-BH + Panty (2-tlg.)",
           "quantity":2,
-          "price":50,
-          "currency":"USD",
-          "image_url":"http://petersapparel.parseapp.com/img/whiteshirt.png"
+          "price":79.98,
+          "currency":"EUR",
+          "image_url":"https://images.baur.de/is/image/empiriecom/ext/formata/15930147.jpg"
         },
         {
-          "title":"Classic Gray T-Shirt",
-          "subtitle":"100% Soft and Luxurious Cotton",
+          "title":"Buffalo Quarzuhr",
+          "subtitle":"Diese Damenarmbanduhr besticht durch die floralen Elemente und die funkelnden Swarovski-Kristalle.",
           "quantity":1,
-          "price":25,
-          "currency":"USD",
-          "image_url":"http://petersapparel.parseapp.com/img/grayshirt.png"
+          "price":39.99,
+          "currency":"EUR",
+          "image_url":"https://images.baur.de/is/image/empiriecom/ext/format_p_m/4241399.jpg"
         }
       ],
       "address":{
-        "street_1":"1 Hacker Way",
+        "street_1":"Michael-Dechant-Straße 10",
         "street_2":"",
-        "city":"Menlo Park",
-        "postal_code":"94025",
-        "state":"CA",
-        "country":"US"
+        "city":"Weismain",
+        "postal_code":"96260",
+        "state":"Bayern",
+        "country":"Deutschland"
       },
       "summary":{
-        "subtotal":75.00,
-        "shipping_cost":4.95,
-        "total_tax":6.19,
-        "total_cost":56.14
+        "subtotal":119.97,
+        "shipping_cost":5.95,
+        "total_cost":125.92
       },
       "adjustments":[
         {
-          "name":"New Customer Discount",
+          "name":"Neu Kunden Rabatt",
           "amount":20
-        },
-        {
-          "name":"$10 Off Coupon",
-          "amount":10
         }
       ]
     }
