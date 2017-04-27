@@ -3,5 +3,6 @@
 	"imageUrl" : "https://images.baur.de/is/image/empiriecom/ext/formatz/",
 	"magellanUrl" : "https://www.baur.de/suche/vorschlag/magellan?clientId=BaurDe&query=",
 	"searchUrl" : "https://www.baur.de/suche/serp/magellan?clientId=BaurDe&count=5&hideFilters=true&query=",
+	"similarSearchUrl" : "https://www.baur.de/INTERSHOP/rest/WFS/EmpirieCom-BaurDE-Site/web/picalike/",
 	"productUrl" : "https://www.baur.de/p/"
 }

@@ -34,13 +34,14 @@ app.get('/', function (req, res) {
     //console.log(message.sendJson(0, "./highlights.json"));
     
     var text = "zeig mir schwarze schuhe von adidas";
-    doNewSearch(0, text);
     //console.log(convertTextToSearchQuery(cleanupSearchQuery("suche nach einer gelben hose")))
     //var commandJson = csvToJSON(fileReader.result);
     //JSON.stringify(commandJson)
     //console.log(JSON.stringify(commandJson));
     //var query = convertTextToSearchQuery(cleanupSearchQuery(text));
-    res.redirect('your/404/path.html');
+    res.send("Test");
+    existSimilarProducts("723499");
+    //res.redirect('your/404/path.html');
 })
 
 // for Facebook verification
@@ -88,6 +89,7 @@ app.post('/webhook/', function (req, res) {
         if (event.postback) {
             if(event.postback.payload.includes("similar_products")) {
                 message.sendText(sender, "Ähnlichkeitssuche wurde angestoßen");
+                doSimilarSearch(sender, text);       
                 continue;
             }
         }
@@ -123,7 +125,7 @@ function includesSearchIdentifier(text) {
     return false;
 }
 
-function doSearch(sender, text, similiarProductId) {
+function doSearch(sender, text) {
     var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
     var url = config.searchUrl + query;
 
@@ -138,22 +140,22 @@ function doSearch(sender, text, similiarProductId) {
         if (!error && response.statusCode === 200) {
             if(body != null && body.searchresult != null && body.searchresult.result != null) {
                 var productArr = [];
-                var styles = body.searchresult.result.styles;
-                for(var i = 0; i < styles.length; i++) {
+                var products = body.searchresult.result.styles;
+                for(var i = 0; i < products.length; i++) {
                     product = {};
-                    product.title = styles[i].name;
-                    product.id = styles[i].masterSku;
-                    if(styles[i].similarId != null) {
-                        product.similarId = styles[i].similarId;
+                    product.title = products[i].name;
+                    product.id = products[i].masterSku;
+                    if(products[i].similarId != null) {
+                        product.similarId = products[i].similarId;
                     }
-                    if(styles[i].images != null) {
-                      product.image_url = config.imageUrl + styles[i].images[0];  
+                    if(products[i].images != null) {
+                      product.image_url = config.imageUrl + products[i].images[0];  
                     }
-                    product.subtitle = styles[i].description;
-                    if(styles[i].oldPrice != null) {
-                        product.oldPrice = styles[i].oldPrice.value; 
+                    product.subtitle = products[i].description;
+                    if(products[i].oldPrice != null) {
+                        product.oldPrice = products[i].oldPrice.value; 
                     }
-                    product.price = styles[i].price.value;
+                    product.price = products[i].price.value;
                     productArr.push(product);
                 }
 
@@ -166,6 +168,74 @@ function doSearch(sender, text, similiarProductId) {
         }
     });
 }
+
+function doSimilarSearch(sender, similiarProductId) {
+    var url = config.similarSearchUrl + similiarProductId;
+
+    request({ 
+        url: url, 
+        followRedirect: false,
+        json: true,
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.116 Safari/537.36'
+        }
+    }, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            if(body != null && body.productROs != null) {
+                var productArr = [];
+                var products = body.productROs;
+                for(var i = 0; i < products.length; i++) {
+                    product = {};
+                    product.title = products[i].productName;
+                    product.id = products[i].masterSku;
+                    orderNumber = products[i].orderNumberWithPromotion;
+                    if(products[i].similarId != null) {
+                        product.similarId = products[i].similarId;
+                    } else if(existSimilarProducts(orderNumber.substring(0, orderNumber.length - 2))){
+                        product.similarId = orderNumber.substring(0, orderNumber.length - 2);
+                    }
+                    if(products[i].image != null) {
+                      product.image_url = config.imageUrl + products[i].image;  
+                    }
+                    product.subtitle = products[i].description;
+                    if(products[i].oldPrice != null) {
+                        product.oldPrice = products[i].oldPrice; 
+                    }
+                    product.price = products[i].price;
+                    productArr.push(product);
+                }
+
+                if(productArr.length < 1) {
+                    message.sendText(sender, "Leider konnte ich keine Produkte für dich finden :'( aber ich bin mir sicher hier wirst du fündig -> www.baur.de/s" + query + " 😊 ");
+                } else {
+                    message.sendProductSlider(sender, productArr);
+                }
+            }
+        }
+    });
+}
+
+function existSimilarProducts(similarId) {
+    var url = config.similarSearchUrl + similarId;
+    console.log(url);
+
+    request({ 
+        url: url, 
+        followRedirect: false,
+        json: true,
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.116 Safari/537.36'
+        }
+    }, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            console.log(body.productROs);
+            if(body != null && body.productROs != null) {
+                return true;
+            }
+        }
+    });
+}
+
 
 function convertTextToSearchQuery(text) {
     var adjectives = "";
