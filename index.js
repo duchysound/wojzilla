@@ -31,7 +31,6 @@ fileReader.readAsText (new File(__dirname + '/csv/commands.csv'),"UTF-8");
 
 // Index route
 app.get('/', function (req, res) {
-
     //console.log(message.sendJson(0, "./highlights.json"));
     res.send('Hello world, I am a chat bot ' + fileReader.result );
     var text = "zeig mir schwarze schuhe von adidas";
@@ -171,7 +170,7 @@ function cleanupSearchQuery(text) {
     return newText;
 }
 
-function doSearch(sender, text) {
+function doSearch(sender, text, similiarProductId) {
     var query = encodeURI(convertTextToSearchQuery(cleanupSearchQuery(text)));
     var url = config.searchUrl + query;
 
