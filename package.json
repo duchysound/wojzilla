@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/duchysound/wojzilla#readme",
   "dependencies": {
+    "async": "^2.3.0",
     "body-parser": "^1.17.1",
+    "deasync": "^0.1.9",
     "express": "^4.15.2",
     "request": "^2.81.0",
     "request-promise": "^4.2.0"
