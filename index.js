@@ -193,7 +193,7 @@ function doSimilarSearch(sender, similiarProductId) {
                     if(products[i].similarId != null) {
                         product.similarId = products[i].similarId;
                     } else {
-                        var url = config.similarSearchUrl + orderNumber.substring(0, orderNumber.length - 2));
+                        var url = config.similarSearchUrl + orderNumber.substring(0, orderNumber.length - 2);
                         console.log(url);
                         request({ 
                             url: url, 
