@@ -86,9 +86,10 @@ app.post('/webhook/', function (req, res) {
             }
         }
         if (event.postback) {
-            text = JSON.stringify(event.postback);
-            message.sendText(sender, "Postback received: "+text.substring(0, 200), token);
-            continue;
+            if(event.postback.payload.includes("similiar search")) {
+                doSimiliarSearch(event.postback.payload);
+                continue;
+            }
         }
     }
     res.sendStatus(200);
