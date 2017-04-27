@@ -87,9 +87,10 @@ app.post('/webhook/', function (req, res) {
             }
         }
         if (event.postback) {
-            if(event.postback.payload.includes("similar_products")) {
+            payload = event.postback.payload;
+            if(payload.includes("similar_products")) {
                 message.sendText(sender, "Ähnlichkeitssuche wurde angestoßen");
-                doSimilarSearch(sender, text);       
+                doSimilarSearch(sender, payload.substring(payload.indexOf(":") + 1));       
                 continue;
             }
         }
