@@ -86,8 +86,8 @@ app.post('/webhook/', function (req, res) {
             }
         }
         if (event.postback) {
-            if(event.postback.payload.includes("similiar search")) {
-                doSimiliarSearch(event.postback.payload);
+            if(event.postback.payload.includes("similar_products")) {
+                message.sendText(sender, "Ähnlichkeitssuche wurde angestoßen");
                 continue;
             }
         }
@@ -144,6 +144,9 @@ function doSearch(sender, text, similiarProductId) {
                     product = {};
                     product.title = styles[i].name;
                     product.id = styles[i].masterSku;
+                    if(styles[i].similarId != null) {
+                        product.similarId = styles[i].similarId;
+                    }
                     if(styles[i].images != null) {
                       product.image_url = config.imageUrl + styles[i].images[0];  
                     }

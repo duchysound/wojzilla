@@ -85,6 +85,9 @@ module.exports = {
             }
             messageData.attachment.payload.elements[i].buttons = [];
             messageData.attachment.payload.elements[i].buttons.push(newUrlButton(config.productUrl + productArr[i].id, "Zum Produkt"));
+            if(productArr[i].similarId != null) {
+                messageData.attachment.payload.elements[i].buttons.push(newPostBackButton("Ähnliche Produkte", "similar_products:" + productArr[i].similarId));
+            }
         }
         sendObj(sender, messageData);
     }
@@ -120,6 +123,15 @@ function newUrlButton(url, title) {
         "type": "web_url",
         "url": url,
         "title": title
+    }
+    return button;
+}
+
+function newPostBackButton(title, payload) {
+    button = {
+        "type": "postback",
+        "title": title,
+        "Payload": payload
     }
     return button;
 }
