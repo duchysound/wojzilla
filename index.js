@@ -136,7 +136,6 @@ function doSearch(sender, text, similiarProductId) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode === 200) {
-            console.log("searchresult: " + body.searchresult);
             if(body != null && body.searchresult != null && body.searchresult.result != null) {
                 var productArr = [];
                 var styles = body.searchresult.result.styles;
@@ -163,8 +162,6 @@ function doSearch(sender, text, similiarProductId) {
                 } else {
                     message.sendProductSlider(sender, productArr);
                 }
-                
-                console.log(JSON.stringify(productArr));
             }
         }
     });
@@ -235,8 +232,6 @@ function userGreeting(sender) {
         url: url,
         json: true
     }, function (error, response, body) {
-        //console.log(response);
-        console.log(body);
         if (!error && response.statusCode === 200) {
              message.sendText(sender, "Hey " + body.first_name +", wie kann ich dir weiterhelfen? :)");
              message.sendText(sender, "Du kannst zum Beispiel sagen \"Zeig mir aktuelle Highlights\" oder \"Ich suche schwarze Schuhe von Adidas\" dann versuch ich dir zu helfen. :)");
