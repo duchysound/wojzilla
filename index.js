@@ -32,7 +32,7 @@ fileReader.readAsText (new File(__dirname + '/csv/commands.csv'),"UTF-8");
 // Index route
 app.get('/', function (req, res) {
     //console.log(message.sendJson(0, "./highlights.json"));
-    res.send('Hello world, I am a chat bot ' + fileReader.result );
+    
     var text = "zeig mir schwarze schuhe von adidas";
     doNewSearch(0, text);
     //console.log(convertTextToSearchQuery(cleanupSearchQuery("suche nach einer gelben hose")))
@@ -40,6 +40,7 @@ app.get('/', function (req, res) {
     //JSON.stringify(commandJson)
     //console.log(JSON.stringify(commandJson));
     //var query = convertTextToSearchQuery(cleanupSearchQuery(text));
+    res.redirect('your/404/path.html');
 })
 
 // for Facebook verification
@@ -94,46 +95,20 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200);
 })
 
-function convertTextToSearchQuery(text) {
-    var adjectives = "";
-    var nouns = "";
-    var wordArray = text.split(" ");
-
-    for (var i = 0; i < wordArray.length; i++) {
-        for (var j = 0; j < parsedWords.adjectives.length; j++) {
-            if(wordArray[i].includes(parsedWords.adjectives[j])) {
-                 if(adjectives.length < 1) {
-                    adjectives = wordArray[i];
-                } else {
-                    adjectives = adjectives + " " + wordArray[i];
-                }
-                continue;
-            }
-        }
-        for (var k = 0; k< parsedWords.nouns.length; k++) {
-            if(wordArray[i].includes(parsedWords.nouns[k]) && parsedWords.nouns[k].trim().length > 1) {
-                if(nouns.length < 1) {
-                    nouns = wordArray[i];
-                } else {
-                    nouns = nouns + " " + wordArray[i];
-                }
-                continue;
-            }
-        }
-    }
-    if(nouns.length < 1) {
-        return text;
-    }
-    if(adjectives.length < 1) {
-        return nouns;
-    }
-    return adjectives + " " + nouns;
-}
 
 function includesCommand(text, commandJson) {
     for (var i = 0; i < commandJson.length; i++) {
         if(text.includes(commandJson[i].command)) {
             return true;
+        }
+    }
+    return false;
+}
+
+function getCommandFile(text, commandJson) {
+    for (var i = 0; i < commandJson.length; i++) {
+        if(text.includes(commandJson[i].command)) {
+            return commandJson[i].fileName;
         }
     }
     return false;
@@ -146,28 +121,6 @@ function includesSearchIdentifier(text) {
         }
     }
     return false;
-}
-
-function cleanupSearchQuery(text) {
-    var wordArray = text.replace(/\W+/g, " ").split(" ");
-    var newText = "";
-    for (var i = 0; i < wordArray.length; i++) {
-        var remove = false;
-        for (var j = 0; j < parsedWords.unusedWords.length; j++) {
-            if(wordArray[i] == parsedWords.unusedWords[j]) {
-                remove = true;
-                continue;
-            }
-        }
-        if(!remove) {
-            if(newText.length < 1) {
-                newText = wordArray[i];
-            } else {
-               newText = newText + " " + wordArray[i]; 
-            }
-        }
-    }
-    return newText;
 }
 
 function doSearch(sender, text, similiarProductId) {
@@ -214,14 +167,63 @@ function doSearch(sender, text, similiarProductId) {
     });
 }
 
+function convertTextToSearchQuery(text) {
+    var adjectives = "";
+    var nouns = "";
+    var wordArray = text.split(" ");
 
-function getCommandFile(text, commandJson) {
-    for (var i = 0; i < commandJson.length; i++) {
-        if(text.includes(commandJson[i].command)) {
-            return commandJson[i].fileName;
+    for (var i = 0; i < wordArray.length; i++) {
+        for (var j = 0; j < parsedWords.adjectives.length; j++) {
+            if(wordArray[i].includes(parsedWords.adjectives[j])) {
+                 if(adjectives.length < 1) {
+                    adjectives = wordArray[i];
+                } else {
+                    adjectives = adjectives + " " + wordArray[i];
+                }
+                continue;
+            }
+        }
+        for (var k = 0; k< parsedWords.nouns.length; k++) {
+            if(wordArray[i].includes(parsedWords.nouns[k]) && parsedWords.nouns[k].trim().length > 1) {
+                if(nouns.length < 1) {
+                    nouns = wordArray[i];
+                } else {
+                    nouns = nouns + " " + wordArray[i];
+                }
+                continue;
+            }
         }
     }
-    return false;
+    if(nouns.length < 1) {
+        return text;
+    }
+    if(adjectives.length < 1) {
+        return nouns;
+    }
+    return adjectives + " " + nouns;
+}
+
+
+function cleanupSearchQuery(text) {
+    var wordArray = text.replace(/\W+/g, " ").split(" ");
+    var newText = "";
+    for (var i = 0; i < wordArray.length; i++) {
+        var remove = false;
+        for (var j = 0; j < parsedWords.unusedWords.length; j++) {
+            if(wordArray[i] == parsedWords.unusedWords[j]) {
+                remove = true;
+                continue;
+            }
+        }
+        if(!remove) {
+            if(newText.length < 1) {
+                newText = wordArray[i];
+            } else {
+               newText = newText + " " + wordArray[i]; 
+            }
+        }
+    }
+    return newText;
 }
 
 function userGreeting(sender) {
