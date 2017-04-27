@@ -131,7 +131,7 @@ function newPostBackButton(title, payload) {
     button = {
         "type": "postback",
         "title": title,
-        "Payload": payload
+        "payload": payload
     }
     return button;
 }
