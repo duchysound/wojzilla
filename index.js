@@ -172,7 +172,7 @@ function doSearch(sender, text) {
     });
 }
 
-function doSimilarSearch(sender, similiarProductId) {
+var doSimilarSearch = deasync(function(sender, similiarProductId) {
     var url = config.similarSearchUrl + similiarProductId;
 
     request({ 
@@ -216,7 +216,7 @@ function doSimilarSearch(sender, similiarProductId) {
             }
         }
     });
-}
+})
 
 var existSimilarProducts = deasync(function(similarId) {
     var url = config.similarSearchUrl + similarId;
