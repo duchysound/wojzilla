@@ -196,7 +196,7 @@ var doSimilarSearch = deasync(function(sender, similiarProductId) {
                         product.similarId = products[i].similarId;
                     } else {
                         url = config.similarSearchUrl + orderNumber.substring(0, orderNumber.length - 2);
-                        console.log(url);
+                        deasync(console.log(url);
                         request({ 
                             url: url, 
                             followRedirect: false,
@@ -210,7 +210,7 @@ var doSimilarSearch = deasync(function(sender, similiarProductId) {
                                     product.similarId = orderNumber.substring(0, orderNumber.length - 2);
                                 }
                             }
-                        });
+                        });)
                     }
                     if(products[i].image != null) {
                       product.image_url = config.imageUrl + products[i].image;  
