@@ -172,7 +172,6 @@ function doSearch(sender, text) {
 
 function doSimilarSearch (sender, similiarProductId) {
     var url = config.similarSearchUrl + similiarProductId;
-
     request({ 
         url: url, 
         followRedirect: false,
@@ -205,7 +204,6 @@ function doSimilarSearch (sender, similiarProductId) {
                     product.price = products[i].price;
                     productArr.push(product);
                 }
-
                 if(productArr.length < 1) {
                     message.sendText(sender, "Leider konnte ich keine Produkte für dich finden :'( aber ich bin mir sicher hier wirst du fündig -> www.baur.de/s" + query + " 😊 ");
                 } else {
